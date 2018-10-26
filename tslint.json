@@ -1,11 +1,48 @@
 {
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true,
+    "jest": true
+  },
   "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
-  "linterOptions": {
-    "exclude": [
-      "config/**/*.js",
-      "node_modules/**/*.ts",
-      "coverage/lcov-report/*.js"
+  "plugins": ["babel", "react", "promise", "import", "standard", "node"],
+  "rules": {
+    "react/no-unused-prop-types": "error",
+    "object-curly-spacing": ["error", "always"],
+    "max-len": [
+      1,
+      {
+        "code": 80,
+        "comments": 80
+      }
     ],
-    "semicolon": [false, "never"]
+    "react/sort-comp": [
+      1,
+      {
+        "order": [
+          "static-methods",
+          "lifecycle",
+          "everything-else",
+          "rendering",
+          "refs&handlers"
+        ],
+        "groups": {
+          "rendering": ["/^render.+$/", "render"],
+          "refs&handlers": ["/^ref.+$/", "/^handle.+$/"]
+        }
+      }
+    ],
+    "newline-before-return": "error",
+    "newline-after-var": ["error", "always"],
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "never",
+        "named": "never",
+        "asyncArrow": "always"
+      }
+    ]
   }
 }

@@ -1,9 +1,18 @@
+import App from './App'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import App from './App'
-import './index.css'
-import registerServiceWorker from './registerServiceWorker'
+import { browserHistory, Route, Router } from 'react-router'
 
-ReactDOM.render(<App />, document.getElementById('root') as HTMLElement)
+import registerServiceWorker from './registerServiceWorker'
+import Test from 'src/components/Test'
+import './index.css'
+
+ReactDOM.render(
+  <Router history={browserHistory}>
+    <Route path="/" component={App} />
+    <Route path="test" component={Test} />
+  </Router>,
+  document.getElementById('root') as HTMLElement
+)
 
 registerServiceWorker()
