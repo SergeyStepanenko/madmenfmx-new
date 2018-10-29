@@ -2,6 +2,7 @@ import * as React from 'react'
 import { observable } from 'mobx'
 
 import Times from './Timer'
+import TodoList from './TodoList'
 
 export const appState = observable({
   timer: 0,
@@ -12,6 +13,11 @@ export const appState = observable({
 
 export default class Mobx extends React.Component {
   render() {
-    return <Times appState={appState} />
+    return (
+      <div>
+        <Times appState={appState} />
+        <TodoList />
+      </div>
+    )
   }
 }
