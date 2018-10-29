@@ -43,6 +43,8 @@
         "named": "never",
         "asyncArrow": "always"
       }
-    ]
+    ],
+    "ordered-imports": [false],
+    "object-literal-sort-keys": [false]
   }
 }
