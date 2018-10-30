@@ -6,7 +6,6 @@
     "es6": true,
     "jest": true
   },
-  "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
   "plugins": ["babel", "react", "promise", "import", "standard", "node"],
   "rules": {
     "react/no-unused-prop-types": "error",
@@ -45,7 +44,9 @@
       }
     ],
     "ordered-imports": [false],
-    "object-literal-sort-keys": [false],
-    "member-access": false
+    "object-literal-sort-keys": false,
+    "member-access": false,
+    "no-console": [true, "warning"],
+    "no-shadowed-variable": [false]
   }
 }
