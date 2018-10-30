@@ -1,9 +1,11 @@
 import * as React from 'react'
 import { inject, observer } from 'mobx-react'
+import { observable, action } from 'mobx'
 
 import { TODO } from 'src/constants'
 import { TodoModel } from 'src/models'
-import { observable, action } from 'mobx'
+
+import TodoItem from './TodoItem'
 
 @inject(TODO)
 @observer
@@ -17,10 +19,18 @@ export default class TodoList extends React.Component<any> {
     return (
       <ul>
         <input type="text" onChange={this.handleChange} value={this.value} />
-        {todo.activeTodos.map(({ id, text }: TodoModel) => (
-          <li key={id}>{text}</li>
+        <button type="text" onClick={this.handleClickAdd}>
+          Добавить
+        </button>
+        {todo.activeTodos.map(({ id, text, completed }: TodoModel) => (
+          <TodoItem
+            id={id}
+            key={id}
+            text={text}
+            completed={completed}
+            onEdit={this.handleClickEdit}
+          />
         ))}
-        <button onClick={this.handleClick}>Добавить</button>
       </ul>
     )
   }
@@ -30,9 +40,15 @@ export default class TodoList extends React.Component<any> {
     this.value = event.target.value
   }
 
-  handleClick = () => {
+  handleClickAdd = () => {
     const { todo } = this.props
 
     todo.add({ text: this.value, completed: false })
+  }
+
+  handleClickEdit = (id: number) => {
+    const { todo } = this.props
+
+    todo.edit(id, { text: this.value })
   }
 }

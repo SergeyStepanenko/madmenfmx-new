@@ -7,7 +7,7 @@ export class TodoModel {
     return this.nextId++
   }
 
-  readonly id?: number
+  readonly id: number
 
   @observable
   public text: string
