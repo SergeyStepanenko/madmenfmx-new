@@ -9,6 +9,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle'
 import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
 
+import Sidebar from './Sidebar'
+
 const styles = {
   root: {
     flexGrow: 1
@@ -25,7 +27,8 @@ const styles = {
 class MenuAppBar extends React.Component<any> {
   state = {
     auth: true,
-    anchorEl: null
+    anchorEl: null,
+    isSidebarOpen: false
   }
 
   handleChange = (event: any) => {
@@ -42,17 +45,19 @@ class MenuAppBar extends React.Component<any> {
 
   render() {
     const { classes, children } = this.props
-    const { auth, anchorEl } = this.state
+    const { auth, anchorEl, isSidebarOpen } = this.state
     const open = Boolean(anchorEl)
 
     return (
       <div className={classes.root}>
+        <Sidebar isOpen={isSidebarOpen} onClose={this.handleSidebarClose} />
         <AppBar position="static">
           <Toolbar>
             <IconButton
               className={classes.menuButton}
               color="inherit"
               aria-label="Menu"
+              onClick={this.handleSidebarOpen}
             >
               <MenuIcon />
             </IconButton>
@@ -93,6 +98,14 @@ class MenuAppBar extends React.Component<any> {
         {children}
       </div>
     )
+  }
+
+  handleSidebarOpen = () => {
+    this.setState({ isSidebarOpen: true })
+  }
+
+  handleSidebarClose = () => {
+    this.setState({ isSidebarOpen: false })
   }
 }
 
