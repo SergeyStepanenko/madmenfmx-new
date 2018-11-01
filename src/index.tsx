@@ -7,6 +7,7 @@ import { TodoStore, TaskStore } from 'src/stores'
 import { TODO, TASK } from 'src/constants'
 import { TodoModel } from 'src/models'
 
+import Layout from './Layout'
 import Router from './Router'
 import registerServiceWorker from './registerServiceWorker'
 import './index.css'
@@ -23,7 +24,9 @@ const taskStore = new TaskStore()
 ReactDOM.render(
   <Root>
     <Provider {...{ [TODO]: todoStore, [TASK]: taskStore }}>
-      <Router />
+      <Layout>
+        <Router />
+      </Layout>
     </Provider>
   </Root>,
   document.getElementById('root') as HTMLElement
