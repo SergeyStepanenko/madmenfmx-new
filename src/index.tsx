@@ -4,10 +4,12 @@ import { browserHistory, Route, Router } from 'react-router'
 import { Provider } from 'mobx-react'
 
 import Root from 'src/Root'
-import { TodoStore } from 'src/stores'
+import { TodoStore, TaskStore } from 'src/stores'
+import { TODO, TASK } from 'src/constants'
 import { TodoModel } from 'src/models'
 import Test from 'src/components/Test'
 import Mobx from 'src/components/Mobx'
+import Node from 'src/components/Node'
 
 import registerServiceWorker from './registerServiceWorker'
 import App from './App'
@@ -20,14 +22,16 @@ const defaultTodos = [
 ]
 
 const todoStore = new TodoStore(defaultTodos)
+const taskStore = new TaskStore()
 
 ReactDOM.render(
   <Root>
-    <Provider {...{ todo: todoStore }}>
+    <Provider {...{ [TODO]: todoStore, [TASK]: taskStore }}>
       <Router history={browserHistory}>
         <Route path="/" component={App} />
         <Route path="test" component={Test} />
         <Route path="mobx" component={Mobx} />
+        <Route path="node" component={Node} />
       </Router>
     </Provider>
   </Root>,
