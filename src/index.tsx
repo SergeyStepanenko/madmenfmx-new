@@ -9,7 +9,6 @@ import { TODO, TASK } from 'src/constants'
 import { TodoModel } from 'src/models'
 import { routes } from './routes'
 
-import Layout from './Layout'
 import registerServiceWorker from './registerServiceWorker'
 import './index.css'
 
@@ -25,9 +24,7 @@ const taskStore = new TaskStore()
 ReactDOM.render(
   <Root>
     <Provider {...{ [TODO]: todoStore, [TASK]: taskStore }}>
-      <Layout>
-        <Router history={browserHistory} routes={routes} />
-      </Layout>
+      <Router history={browserHistory} routes={routes} />
     </Provider>
   </Root>,
   document.getElementById('root') as HTMLElement

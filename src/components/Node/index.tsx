@@ -11,6 +11,8 @@ import TableRow from '@material-ui/core/TableRow'
 import { TASK } from 'src/constants'
 import { TaskModel } from 'src/models'
 
+import Layout from 'src/Layout'
+
 @inject(TASK)
 @observer
 export default class Node extends React.Component<any> {
@@ -20,12 +22,18 @@ export default class Node extends React.Component<any> {
     } = this.props
 
     return (
-      <>
+      <Layout>
         <button
           style={{ width: '200px', height: '40px' }}
           onClick={this.handleClick}
         >
           Нажми плез
+        </button>
+        <button
+          style={{ width: '200px', height: '40px' }}
+          onClick={this.handleClickAdd}
+        >
+          Еще нажми плез
         </button>
         <Table style={{ width: '400px' }}>
           <TableHead>
@@ -55,14 +63,21 @@ export default class Node extends React.Component<any> {
             </TableBody>
           )}
         </Table>
-      </>
+      </Layout>
     )
   }
 
   @action('get tasks')
-  handleClick = async () => {
+  handleClick = () => {
     const { task } = this.props
 
     task.fetch()
+  }
+
+  @action('add stask')
+  handleClickAdd = () => {
+    const { task } = this.props
+
+    task.add({ name: 'ololo', status: 'pending' })
   }
 }

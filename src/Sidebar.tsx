@@ -41,7 +41,7 @@ class Sidebar extends React.Component<any> {
           <div className={classes.list}>
             <List>
               {config.map(({ name, path }, index) => (
-                <Link to={path}>
+                <Link key={path} to={path}>
                   <ListItem button key={path}>
                     <ListItemIcon>
                       {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
