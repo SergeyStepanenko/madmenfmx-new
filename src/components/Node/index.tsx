@@ -15,7 +15,9 @@ import { TaskModel } from 'src/models'
 @observer
 export default class Node extends React.Component<any> {
   render() {
-    const { task } = this.props
+    const {
+      task: { list, isLoading }
+    } = this.props
 
     return (
       <>
@@ -32,16 +34,26 @@ export default class Node extends React.Component<any> {
               <TableCell>Статус</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {task.taskList.map(({ id, name, status }: TaskModel) => {
-              return (
-                <TableRow key={id}>
-                  <TableCell>{name}</TableCell>
-                  <TableCell>{status}</TableCell>
-                </TableRow>
-              )
-            })}
-          </TableBody>
+          {isLoading ? (
+            <TableBody>
+              <TableRow>
+                <TableCell>
+                  <small>Загрузка</small>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          ) : (
+            <TableBody>
+              {list.map(({ id, name, status }: TaskModel) => {
+                return (
+                  <TableRow key={id}>
+                    <TableCell>{name}</TableCell>
+                    <TableCell>{status}</TableCell>
+                  </TableRow>
+                )
+              })}
+            </TableBody>
+          )}
         </Table>
       </>
     )

@@ -24,14 +24,20 @@ const defaultTodos = [
 const todoStore = new TodoStore(defaultTodos)
 const taskStore = new TaskStore()
 
+const routes = [
+  { path: '/', component: App },
+  { path: 'test', component: Test },
+  { path: 'mobx', component: Mobx },
+  { path: 'node', component: Node }
+]
+
 ReactDOM.render(
   <Root>
     <Provider {...{ [TODO]: todoStore, [TASK]: taskStore }}>
       <Router history={browserHistory}>
-        <Route path="/" component={App} />
-        <Route path="test" component={Test} />
-        <Route path="mobx" component={Mobx} />
-        <Route path="node" component={Node} />
+        {routes.map(({ path, component }) => (
+          <Route path={path} component={component} />
+        ))}
       </Router>
     </Provider>
   </Root>,
