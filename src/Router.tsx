@@ -1,24 +1,44 @@
 import * as React from 'react'
 import { browserHistory, Route, Router } from 'react-router'
+import * as Loadable from 'react-loadable'
 
-import Test from 'src/components/Test'
-import Mobx from 'src/components/Mobx'
-import Node from 'src/components/Node'
+const App = () => import('./App')
+const Node = () => import('src/components/Node')
+const Mobx = () => import('src/components/Mobx')
+const Test = () => import('src/components/Test')
 
-import App from './App'
+const Loader = ({ error }: any) => {
+  if (error) {
+    console.error(error)
 
-const routes = [
-  { path: '/', component: App },
-  { path: 'test', component: Test },
-  { path: 'mobx', component: Mobx },
-  { path: 'node', component: Node }
+    return <pre style={{ color: 'red' }}>Error</pre>
+  }
+
+  return null
+}
+
+const config = [
+  { path: '/', getComponent: App },
+  { path: 'test', getComponent: Test },
+  { path: 'mobx', getComponent: Mobx },
+  { path: 'node', getComponent: Node }
 ]
+
+const routines = config.map(({ path, getComponent }) => {
+  return {
+    path,
+    component: Loadable({
+      loader: getComponent,
+      loading: Loader
+    })
+  }
+})
 
 export default class Routes extends React.Component {
   render() {
     return (
       <Router history={browserHistory}>
-        {routes.map(({ path, component }) => (
+        {routines.map(({ path, component }) => (
           <Route key={path} path={path} component={component} />
         ))}
       </Router>
