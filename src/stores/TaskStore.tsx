@@ -41,4 +41,14 @@ export default class TaskStore {
 
     this.fetch()
   }
+
+  @action('update task')
+  update = async ({ id, name, status }: TaskModel) => {
+    await axios.put(`${API}/tasks/${id}`, {
+      name,
+      status
+    })
+
+    this.fetch()
+  }
 }

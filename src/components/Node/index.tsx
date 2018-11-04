@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { action } from 'mobx'
 import { inject } from 'mobx-react'
 import { observer } from 'mobx-react'
 import Table from '@material-ui/core/Table'
@@ -12,6 +11,8 @@ import { TASK } from 'src/constants'
 import { TaskModel } from 'src/models'
 
 import Layout from 'src/Layout'
+
+import Item from './components/Item'
 
 @inject(TASK)
 @observer
@@ -54,10 +55,12 @@ export default class Node extends React.Component<any> {
             <TableBody>
               {list.map(({ id, name, status }: TaskModel) => {
                 return (
-                  <TableRow key={id}>
-                    <TableCell>{name}</TableCell>
-                    <TableCell>{status}</TableCell>
-                  </TableRow>
+                  <Item
+                    // onClick={this.handleItemClick}
+                    key={id}
+                    name={name}
+                    status={status}
+                  />
                 )
               })}
             </TableBody>
@@ -67,14 +70,12 @@ export default class Node extends React.Component<any> {
     )
   }
 
-  @action('get tasks')
   handleClick = () => {
     const { task } = this.props
 
     task.fetch()
   }
 
-  @action('add stask')
   handleClickAdd = () => {
     const { task } = this.props
 
