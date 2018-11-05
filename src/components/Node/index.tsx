@@ -19,7 +19,7 @@ import Item from './components/Item'
 export default class Node extends React.Component<any> {
   render() {
     const {
-      task: { list, isLoading }
+      task: { list, isLoading, update }
     } = this.props
 
     return (
@@ -36,11 +36,12 @@ export default class Node extends React.Component<any> {
         >
           Еще нажми плез
         </button>
-        <Table style={{ width: '400px' }}>
+        <Table style={{ width: '550px' }}>
           <TableHead>
             <TableRow>
               <TableCell>Название</TableCell>
               <TableCell>Статус</TableCell>
+              <TableCell>Действие</TableCell>
             </TableRow>
           </TableHead>
           {isLoading ? (
@@ -56,10 +57,11 @@ export default class Node extends React.Component<any> {
               {list.map(({ id, name, status }: TaskModel) => {
                 return (
                   <Item
-                    // onClick={this.handleItemClick}
                     key={id}
+                    id={id}
                     name={name}
                     status={status}
+                    onUpdate={update}
                   />
                 )
               })}
