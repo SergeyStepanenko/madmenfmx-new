@@ -30,13 +30,48 @@ const items: Item[] = [
   { title: 'ThirdBlock' }
 ]
 
+const SLIDE_CHANGE_INTERVAL = 2000
+
 @observer
-export default class Slider extends React.Component<any> {
+export default class Slider extends React.Component {
   @observable
   index: number = 0
 
-  @action('handleShowNextSlide')
-  handleShowNextSlide = () => {
+  interval: any
+  timeout: any
+
+  @observable
+  isInterupted = false
+
+  componentDidMount() {
+    this.startAutoSlider()
+  }
+
+  @action('startAutoSlider')
+  startAutoSlider() {
+    this.interval = setInterval(this.showNextSlide, SLIDE_CHANGE_INTERVAL)
+  }
+
+  @action('pauseAutoSlider')
+  pauseAutoSlider() {
+    if (this.isInterupted) {
+      return
+    }
+
+    clearTimeout(this.timeout)
+    clearInterval(this.interval)
+
+    this.isInterupted = true
+
+    this.timeout = setTimeout(() => {
+      this.isInterupted = false
+
+      this.startAutoSlider()
+    }, 4000)
+  }
+
+  @action('showNextSlide')
+  showNextSlide = () => {
     if (this.index === 2) {
       this.index = 0
 
@@ -46,8 +81,8 @@ export default class Slider extends React.Component<any> {
     this.index = this.index + 1
   }
 
-  @action('handleShowPreviousSlide')
-  handleShowPreviousSlide = () => {
+  @action('showPreviousSlide')
+  showPreviousSlide() {
     if (this.index === 0) {
       this.index = items.length - 1
 
@@ -71,9 +106,19 @@ export default class Slider extends React.Component<any> {
             )
           })}
         </Container>
-        <button onClick={this.handleShowPreviousSlide}>Пред</button>
-        <button onClick={this.handleShowNextSlide}>След</button>
+        <button onClick={this.handleClickPrevious}>Пред</button>
+        <button onClick={this.handleClickNext}>След</button>
       </div>
     )
+  }
+
+  handleClickPrevious = () => {
+    this.showPreviousSlide()
+    this.pauseAutoSlider()
+  }
+
+  handleClickNext = () => {
+    this.showNextSlide()
+    this.pauseAutoSlider()
   }
 }
