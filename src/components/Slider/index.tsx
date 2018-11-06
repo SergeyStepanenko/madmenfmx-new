@@ -31,6 +31,7 @@ const items: Item[] = [
 ]
 
 const SLIDE_CHANGE_INTERVAL = 2000
+const PENDING_DELAY = 5000
 
 @observer
 export default class Slider extends React.Component {
@@ -41,7 +42,7 @@ export default class Slider extends React.Component {
   timeout: any
 
   @observable
-  isInterupted = false
+  isPending = false
 
   componentDidMount() {
     this.startAutoSlider()
@@ -54,20 +55,20 @@ export default class Slider extends React.Component {
 
   @action('pauseAutoSlider')
   pauseAutoSlider() {
-    if (this.isInterupted) {
+    if (this.isPending) {
       return
     }
 
     clearTimeout(this.timeout)
     clearInterval(this.interval)
 
-    this.isInterupted = true
+    this.isPending = true
 
     this.timeout = setTimeout(() => {
-      this.isInterupted = false
+      this.isPending = false
 
       this.startAutoSlider()
-    }, 4000)
+    }, PENDING_DELAY)
   }
 
   @action('showNextSlide')
