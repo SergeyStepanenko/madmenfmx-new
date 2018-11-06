@@ -2,6 +2,7 @@ import * as ReactDOM from 'react-dom'
 import * as React from 'react'
 import { Provider } from 'mobx-react'
 import { browserHistory, Router } from 'react-router'
+import 'normalize.css/normalize.css'
 
 import Root from 'src/Root'
 import { TodoStore, TaskStore } from 'src/stores'
