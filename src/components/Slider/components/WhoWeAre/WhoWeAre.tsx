@@ -6,7 +6,7 @@ export default class WhoWeAre extends React.PureComponent {
   render() {
     return (
       <S.Container>
-        <span style={{ color: '#aa2222' }}>MAD</span>
+        <S.Mad style={{ color: '#aa2222' }}>MAD</S.Mad>
         MEN
       </S.Container>
     )

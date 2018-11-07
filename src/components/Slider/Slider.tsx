@@ -3,18 +3,14 @@ import { observable, action } from 'mobx'
 import { observer } from 'mobx-react'
 
 import WhoWeAre from 'src/components/Slider/components/WhoWeAre'
+import Shop from 'src/components/Slider/components/Shop'
 
 import * as S from './styled'
 
-const items: any = [
-  WhoWeAre,
-  () => <div>SecondBlock</div>,
-  () => <div>ThirdBlock</div>
-]
+const items: React.ReactNode[] = [WhoWeAre, Shop, () => <div>ThirdBlock</div>]
 
 const SLIDE_CHANGE_INTERVAL = 2500
 const PENDING_DELAY = 4000
-
 const isAutoSliderOff = true
 
 @observer
@@ -22,11 +18,11 @@ export default class Slider extends React.Component {
   @observable
   index: number = 0
 
+  @observable
+  isPending: boolean = false
+
   interval: any
   timeout: any
-
-  @observable
-  isPending = false
 
   componentDidMount() {
     this.startAutoSlider()
@@ -61,7 +57,7 @@ export default class Slider extends React.Component {
 
   @action('showNextSlide')
   showNextSlide = () => {
-    if (this.index === 2) {
+    if (this.index === items.length - 1) {
       this.index = 0
 
       return

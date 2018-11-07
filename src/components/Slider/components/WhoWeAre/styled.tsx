@@ -9,3 +9,7 @@ export const Container = styled.div`
   font-family: ${(props) => props.theme.fontFamily.main};
   font-size: 60px;
 `
+
+export const Mad = styled.span`
+  color: ${(props) => props.theme.colors.main};
+`
