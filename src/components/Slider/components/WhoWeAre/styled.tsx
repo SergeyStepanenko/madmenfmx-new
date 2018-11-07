@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'src/styled-components'
 
 export const Container = styled.div`
   width: 100%;
@@ -6,4 +6,6 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: ${(props) => props.theme.fontFamily.main};
+  font-size: 60px;
 `

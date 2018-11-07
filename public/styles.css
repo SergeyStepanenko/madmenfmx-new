@@ -1,0 +1,10 @@
+@font-face {
+  font-family: 'American Captain';
+  src: url('./fonts/american-captain/American_Captain.eot?') format('eot'),
+    url('./fonts/american-captain/American_Captain.woff') format('woff'),
+    url('./fonts/american-captain/American_Captain.ttf') format('truetype'),
+    url('./fonts/american-captain/American_Captain.svg#AmericanCaptain')
+      format('svg');
+  font-weight: normal;
+  font-style: normal;
+}

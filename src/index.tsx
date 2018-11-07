@@ -2,14 +2,16 @@ import * as ReactDOM from 'react-dom'
 import * as React from 'react'
 import { Provider } from 'mobx-react'
 import { browserHistory, Router } from 'react-router'
+import { ThemeProvider } from 'styled-components'
 import 'normalize.css/normalize.css'
 
 import Root from 'src/Root'
 import { TodoStore, TaskStore } from 'src/stores'
 import { TODO, TASK } from 'src/constants'
 import { TodoModel } from 'src/models'
-import { routes } from './routes'
+import { theme } from 'src/styled-components/theme'
 
+import { routes } from './routes'
 import registerServiceWorker from './registerServiceWorker'
 import './index.css'
 
@@ -24,9 +26,11 @@ const taskStore = new TaskStore()
 
 ReactDOM.render(
   <Root>
-    <Provider {...{ [TODO]: todoStore, [TASK]: taskStore }}>
-      <Router history={browserHistory} routes={routes} />
-    </Provider>
+    <ThemeProvider theme={theme}>
+      <Provider {...{ [TODO]: todoStore, [TASK]: taskStore }}>
+        <Router history={browserHistory} routes={routes} />
+      </Provider>
+    </ThemeProvider>
   </Root>,
   document.getElementById('root') as HTMLElement
 )
