@@ -1,4 +1,19 @@
-import TodoStore from './TodoStore'
-import TaskStore from './TaskStore'
+import { TASK, TODO } from 'src/constants'
+import { TodoModel } from 'src/models'
 
-export { TodoStore, TaskStore }
+import TaskStore from './TaskStore'
+import TodoStore from './TodoStore'
+
+const defaultTodos = [
+  new TodoModel('Active 1'),
+  new TodoModel('Active 2'),
+  new TodoModel('Use React', true)
+]
+
+const taskStore = new TaskStore()
+const todoStore = new TodoStore(defaultTodos)
+
+export default {
+  [TASK]: taskStore,
+  [TODO]: todoStore
+}
