@@ -82,9 +82,11 @@ export default class Slider extends React.Component {
       <div>
         <S.Container>
           {items.map((Component: any, index: number) => {
+            const isActive = this.index === index
+
             return (
-              <S.Block key={index} isActive={this.index === index}>
-                <Component />
+              <S.Block key={index} isActive={isActive}>
+                {isActive && <Component />}
               </S.Block>
             )
           })}
