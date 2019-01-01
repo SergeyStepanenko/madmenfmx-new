@@ -1,12 +1,15 @@
 import * as React from 'react'
 import * as Loadable from 'react-loadable'
 
+import Spinner from 'src/ui/UserMenu/Loader'
+
 const App = () => import('./App')
 const Node = () => import('src/components/Node')
 const Mobx = () => import('src/components/Mobx')
 const Test = () => import('src/components/Test')
 const Form = () => import('src/entries/Form')
 const Slider = () => import('src/components/Slider')
+const SpinnerExample = () => import('src/ui/UserMenu/Loader')
 
 const Loader = ({ error }: any) => {
   if (error) {
@@ -15,7 +18,7 @@ const Loader = ({ error }: any) => {
     return <pre style={{ color: 'red' }}>Error</pre>
   }
 
-  return null
+  return <Spinner />
 }
 
 export const config = [
@@ -24,10 +27,11 @@ export const config = [
   { path: 'mobx', Component: Mobx, name: 'Mobx' },
   { path: 'node', Component: Node, name: 'Node' },
   { path: 'form', Component: Form, name: 'Form' },
-  { path: 'slider', Component: Slider, name: 'Slider' }
+  { path: 'slider', Component: Slider, name: 'Slider' },
+  { path: 'spinner', Component: SpinnerExample, name: 'Spinner' }
 ]
 
-export const routes = config.map(({ path, Component }) => {
+const routes = config.map(({ path, Component }) => {
   return {
     path,
     component: Loadable({
@@ -36,3 +40,5 @@ export const routes = config.map(({ path, Component }) => {
     })
   }
 })
+
+export default routes

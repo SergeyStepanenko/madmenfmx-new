@@ -6,18 +6,18 @@ import 'normalize.css/normalize.css'
 
 import { ThemeProvider } from 'src/styled-components'
 import { theme } from 'src/styled-components/theme'
-import store from 'src/stores'
+import stores from 'src/stores'
 import Root from 'src/Root'
 import Layout from 'src/ui/Layout'
 
-import { routes } from './routes'
+import routes from './routes'
 
 import registerServiceWorker from './registerServiceWorker'
 import './index.css'
 
 ReactDOM.render(
   <Root>
-    <Provider {...store}>
+    <Provider {...stores}>
       <ThemeProvider theme={theme}>
         <Layout>
           <Router history={browserHistory} routes={routes} />

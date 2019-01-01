@@ -3,7 +3,9 @@ import styled from 'src/styled-components'
 
 import UserMenu from './UserMenu'
 
-const Container = styled.div``
+const Container = styled.div`
+  height: 100%;
+`
 const Header: any = styled.div`
   height: 54px;
   position: fixed;
@@ -12,6 +14,7 @@ const Header: any = styled.div`
   left: 0;
 `
 const Body = styled.div`
+  height: 100%;
   margin-top: 54px;
 `
 const Footer = styled.div``

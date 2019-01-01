@@ -7,7 +7,7 @@ import { getIsNewTabClick } from './utils'
 
 const Link = styled.a``
 
-export default function UserMenuLink(props: any) {
+export default React.memo(function UserMenuLink(props: any) {
   const { path, name } = props
 
   const handleClick = (event: any) => {
@@ -39,4 +39,4 @@ export default function UserMenuLink(props: any) {
       {name}
     </Link>
   )
-}
+})

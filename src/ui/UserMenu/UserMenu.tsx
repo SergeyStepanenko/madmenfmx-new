@@ -15,16 +15,14 @@ const MenuItem = styled.li`
   cursor: pointer;
 `
 
-export default class UserMenu extends React.PureComponent {
-  render() {
-    return (
-      <MenuList>
-        {config.map(({ path, name }) => (
-          <MenuItem key={path}>
-            <UserMenuLink path={path} name={name} />
-          </MenuItem>
-        ))}
-      </MenuList>
-    )
-  }
-}
+export default React.memo(function UserMenu() {
+  return (
+    <MenuList>
+      {config.map(({ path, name }) => (
+        <MenuItem key={path}>
+          <UserMenuLink path={path} name={name} />
+        </MenuItem>
+      ))}
+    </MenuList>
+  )
+})
