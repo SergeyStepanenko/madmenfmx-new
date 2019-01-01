@@ -16,13 +16,13 @@ import './index.css'
 
 ReactDOM.render(
   <Root>
-    <ThemeProvider theme={theme}>
-      <Provider {...store}>
+    <Provider {...store}>
+      <ThemeProvider theme={theme}>
         <Layout>
           <Router history={browserHistory} routes={routes} />
         </Layout>
-      </Provider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </Provider>
   </Root>,
   document.getElementById('root') as HTMLElement
 )

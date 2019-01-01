@@ -21,11 +21,8 @@ const styles = (theme: any) => ({
 
 @observer
 class Form extends React.Component<any> {
-  @observable
-  name: string = ''
-
-  @observable
-  phone: string = ''
+  @observable name: string = ''
+  @observable phone: string = ''
 
   render() {
     const { classes } = this.props
