@@ -9,6 +9,7 @@ import { theme } from 'src/styled-components/theme'
 import store from 'src/stores'
 import Root from 'src/Root'
 import { routes } from './routes'
+import Layout from 'src/ui/Layout'
 
 import registerServiceWorker from './registerServiceWorker'
 import './index.css'
@@ -17,7 +18,9 @@ ReactDOM.render(
   <Root>
     <ThemeProvider theme={theme}>
       <Provider {...store}>
-        <Router history={browserHistory} routes={routes} />
+        <Layout>
+          <Router history={browserHistory} routes={routes} />
+        </Layout>
       </Provider>
     </ThemeProvider>
   </Root>,

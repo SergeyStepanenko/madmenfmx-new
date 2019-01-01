@@ -2,13 +2,13 @@ import * as React from 'react'
 
 export default class Root extends React.Component<any, any> {
   renderDevTool() {
-    if (process.env.NODE_ENV !== 'production') {
-      const DevTools = require('mobx-react-devtools').default
-
-      return <DevTools />
+    if (process.env.NODE_ENV === 'production') {
+      return null
     }
 
-    return null
+    const DevTools = require('mobx-react-devtools').default
+
+    return <DevTools />
   }
 
   render() {

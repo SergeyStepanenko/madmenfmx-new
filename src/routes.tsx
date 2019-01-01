@@ -19,19 +19,19 @@ const Loader = ({ error }: any) => {
 }
 
 export const config = [
-  { path: '/', getComponent: App, name: 'Главная' },
-  { path: 'test', getComponent: Test, name: 'Test' },
-  { path: 'mobx', getComponent: Mobx, name: 'Mobx' },
-  { path: 'node', getComponent: Node, name: 'Node' },
-  { path: 'form', getComponent: Form, name: 'Form' },
-  { path: 'slider', getComponent: Slider, name: 'Slider' }
+  { path: '/', Component: App, name: 'Главная' },
+  { path: 'test', Component: Test, name: 'Test' },
+  { path: 'mobx', Component: Mobx, name: 'Mobx' },
+  { path: 'node', Component: Node, name: 'Node' },
+  { path: 'form', Component: Form, name: 'Form' },
+  { path: 'slider', Component: Slider, name: 'Slider' }
 ]
 
-export const routes = config.map(({ path, getComponent }) => {
+export const routes = config.map(({ path, Component }) => {
   return {
     path,
     component: Loadable({
-      loader: getComponent,
+      loader: Component,
       loading: Loader
     })
   }
