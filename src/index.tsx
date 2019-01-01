@@ -12,7 +12,6 @@ import Layout from 'src/ui/Layout'
 import Spinner from 'src/ui/UserMenu/Loader'
 
 import routes from './routes'
-
 import registerServiceWorker from './registerServiceWorker'
 import './index.css'
 
