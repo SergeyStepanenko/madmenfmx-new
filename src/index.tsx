@@ -9,6 +9,7 @@ import { theme } from 'src/styled-components/theme'
 import stores from 'src/stores'
 import Root from 'src/Root'
 import Layout from 'src/ui/Layout'
+import Spinner from 'src/ui/UserMenu/Loader'
 
 import routes from './routes'
 
@@ -20,7 +21,7 @@ ReactDOM.render(
     <Provider {...stores}>
       <ThemeProvider theme={theme}>
         <Layout>
-          <React.Suspense fallback={<div>olololo</div>}>
+          <React.Suspense fallback={<Spinner />}>
             <Router history={browserHistory} routes={routes} />
           </React.Suspense>
         </Layout>

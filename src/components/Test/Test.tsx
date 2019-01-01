@@ -5,17 +5,7 @@ interface IState {
   count: number
 }
 
-const OtherComponent = React.lazy(() => import('src/components/Mobx'))
-
-function MyComponent() {
-  return (
-    <React.Suspense fallback={<div>Loading...</div>}>
-      <OtherComponent />
-    </React.Suspense>
-  )
-}
-
-export default class Test extends React.Component<{}, IState> {
+export default class Test extends React.Component<any, IState> {
   public state = {
     count: 1
   }
@@ -30,7 +20,6 @@ export default class Test extends React.Component<{}, IState> {
         <S.Button onClick={this.handleIncrementCounter}>
           {this.state.count}
         </S.Button>
-        <MyComponent />
       </div>
     )
   }
