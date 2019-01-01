@@ -20,7 +20,9 @@ ReactDOM.render(
     <Provider {...stores}>
       <ThemeProvider theme={theme}>
         <Layout>
-          <Router history={browserHistory} routes={routes} />
+          <React.Suspense fallback={<div>olololo</div>}>
+            <Router history={browserHistory} routes={routes} />
+          </React.Suspense>
         </Layout>
       </ThemeProvider>
     </Provider>

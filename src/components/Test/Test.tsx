@@ -5,6 +5,16 @@ interface IState {
   count: number
 }
 
+const OtherComponent = React.lazy(() => import('src/components/Mobx'))
+
+function MyComponent() {
+  return (
+    <React.Suspense fallback={<div>Loading...</div>}>
+      <OtherComponent />
+    </React.Suspense>
+  )
+}
+
 export default class Test extends React.Component<{}, IState> {
   public state = {
     count: 1
@@ -16,9 +26,12 @@ export default class Test extends React.Component<{}, IState> {
 
   public render() {
     return (
-      <S.Button onClick={this.handleIncrementCounter}>
-        {this.state.count}
-      </S.Button>
+      <div>
+        <S.Button onClick={this.handleIncrementCounter}>
+          {this.state.count}
+        </S.Button>
+        <MyComponent />
+      </div>
     )
   }
 }
