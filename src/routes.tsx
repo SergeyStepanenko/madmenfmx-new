@@ -1,4 +1,6 @@
 import * as React from 'react'
+import { observer } from 'mobx-react'
+import { observable, action } from 'mobx'
 
 const App = () => import('./App')
 const Node = () => import('src/components/Node')
@@ -36,20 +38,23 @@ function retry(fn: any, retriesLeft = 5, interval = 1000) {
   })
 }
 
+@observer
 class ErrorBoundary extends React.Component {
-  state = {
-    hasError: false,
-    errorText: null
-  }
+  @observable hasError = false
+  @observable errorText = null
 
   componentDidCatch(error: any) {
-    this.setState({ hasError: true, errorText: error })
+    this.setError(error)
+  }
+
+  @action
+  setError(error: any) {
+    this.hasError = true
+    this.errorText = error
   }
 
   render() {
-    const { hasError } = this.state
-
-    if (hasError) {
+    if (this.hasError) {
       return <h1>Ошибка</h1>
     }
 
@@ -59,13 +64,13 @@ class ErrorBoundary extends React.Component {
 
 const routes = config.map(({ path, Component }) => {
   // @ts-ignore
-  const LazyEntry = React.lazy(() => retry(Component))
+  const LazyEntryWithRetry = React.lazy(() => retry(Component))
 
   return {
     path,
     component: () => (
       <ErrorBoundary>
-        <LazyEntry />
+        <LazyEntryWithRetry />
       </ErrorBoundary>
     )
   }

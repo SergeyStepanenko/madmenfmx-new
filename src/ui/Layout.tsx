@@ -3,7 +3,7 @@ import styled from 'src/styled-components'
 
 import UserMenu from './UserMenu'
 
-const Header: any = styled.header`
+const Header = styled.header`
   height: 54px;
   position: fixed;
   top: 0;
@@ -16,18 +16,16 @@ const Body = styled.div`
 `
 const Footer = styled.footer``
 
-export default class Layout extends React.Component<any> {
-  render() {
-    const { children } = this.props
+export default function Layout(props: any) {
+  const { children } = props
 
-    return (
-      <>
-        <Header>
-          <UserMenu />
-        </Header>
-        <Body>{children}</Body>
-        <Footer />
-      </>
-    )
-  }
+  return (
+    <>
+      <Header>
+        <UserMenu />
+      </Header>
+      <Body>{children}</Body>
+      <Footer />
+    </>
+  )
 }
