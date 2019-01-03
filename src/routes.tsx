@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { observer } from 'mobx-react'
 import { observable, action } from 'mobx'
 
 const App = () => import('./App')
@@ -7,15 +6,15 @@ const Node = () => import('src/components/Node')
 const Mobx = () => import('src/components/Mobx')
 const Test = () => import('src/components/Test')
 const Slider = () => import('src/components/Slider')
-// const Form = () => import('src/entries/Form')
+const Form = () => import('src/entries/Form')
 
 export const config = [
   { path: '/', Component: App, name: 'Главная' },
   { path: 'node', Component: Node, name: 'Node' },
   { path: 'test', Component: Test, name: 'Test' },
   { path: 'mobx', Component: Mobx, name: 'Mobx' },
-  { path: 'slider', Component: Slider, name: 'Slider' }
-  // { path: 'form', Component: Form, name: 'Form' }
+  { path: 'slider', Component: Slider, name: 'Slider' },
+  { path: 'form', Component: Form, name: 'Form' }
 ]
 
 function retry(fn: any, retriesLeft = 5, interval = 1000) {
@@ -38,8 +37,7 @@ function retry(fn: any, retriesLeft = 5, interval = 1000) {
   })
 }
 
-@observer
-class ErrorBoundary extends React.Component {
+class ErrorBoundary extends React.Component<any> {
   @observable hasError = false
   @observable errorText = null
 

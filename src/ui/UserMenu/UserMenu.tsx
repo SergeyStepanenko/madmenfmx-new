@@ -15,7 +15,7 @@ const MenuItem = styled.li`
   cursor: pointer;
 `
 
-export default React.memo(function UserMenu() {
+export default React.memo(function UserMenu(props: any) {
   return (
     <MenuList>
       {config.map(({ path, name }) => (
