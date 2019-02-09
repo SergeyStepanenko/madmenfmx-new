@@ -4,14 +4,16 @@ export interface ThemeInterface {
   }
   colors: {
     main: string
+    white: string
   }
 }
 
 export const theme: ThemeInterface = {
   fontFamily: {
-    main: 'American Captain'
+    main: 'Open Sans, sans-serif'
   },
   colors: {
-    main: '#aa2222'
+    main: '#aa2222',
+    white: '#fff'
   }
 }
