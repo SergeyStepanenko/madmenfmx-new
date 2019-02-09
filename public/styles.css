@@ -1,10 +1,37 @@
 @font-face {
-  font-family: 'American Captain';
-  src: url('./fonts/american-captain/American_Captain.eot?') format('eot'),
-    url('./fonts/american-captain/American_Captain.woff') format('woff'),
-    url('./fonts/american-captain/American_Captain.ttf') format('truetype'),
-    url('./fonts/american-captain/American_Captain.svg#AmericanCaptain')
-      format('svg');
+  font-family: 'Avenir Medium';
+  src: url('./fonts/Avenir/Avenir-Medium-webfont.woff') format('woff');
   font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Avenir Next Bold';
+  src: url('./fonts/AvenirNextBold/AvenirNextBold.eot') format('eot'),
+    url('./fonts/AvenirNextBold/AvenirNextBold.woff') format('woff'),
+    url('./fonts/AvenirNextBold/AvenirNextBold.ttf') format('truetype'),
+    url('./fonts/AvenirNextBold/AvenirNextBold.otf') format('otf'),
+    url('./fonts/AvenirNextBold/AvenirNextBold.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Avenir Black';
+  src: url('./fonts/AvenirBlack/Avenir-Black.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('./fonts/OpenSans/OpenSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Open Sans Bold';
+  src: url('./fonts/OpenSansBold/OpenSans-Bold.ttf') format('truetype');
   font-style: normal;
 }

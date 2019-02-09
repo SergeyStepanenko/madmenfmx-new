@@ -25,6 +25,8 @@ const List: any = styled.div`
 const ListWrapper: any = styled.div`
   width: 778px;
   overflow: hidden;
+  border-radius: 6px;
+  box-shadow: 0px 0px 5px 0px rgba(0, 30, 44, 0.05);
 `
 
 const Button = styled.button`
