@@ -13,7 +13,7 @@ export const theme: ThemeInterface = {
     main: 'Open Sans, sans-serif'
   },
   colors: {
-    main: '#aa2222',
+    main: '#052554',
     white: '#fff'
   }
 }

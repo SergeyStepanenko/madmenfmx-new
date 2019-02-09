@@ -142,7 +142,7 @@ export default class Carousel extends React.Component {
     const { slide, containerWidth } = this.state
 
     return (
-      <Container onResize={this.handleResize}>
+      <Container>
         <ArrowLeftButton
           isActive={slide > 1}
           onClick={this.handleLeftArrowClick}

@@ -1,9 +1,8 @@
 import * as React from 'react'
 import styled from 'src/styled-components'
 import homeImage from 'src/assets/home.jpg'
-import logoIcon from 'src/assets/logo_icon.svg'
-import logoIconBlack from 'src/assets/logo_icon_black.svg'
-import logoTitle from 'src/assets/logo_type.svg'
+import emailIcon from 'src/assets/email.svg'
+import Logo from 'src/assets/svgr/Logo'
 
 import Carousel from 'src/components/Carousel'
 
@@ -19,14 +18,6 @@ const ImageContainer = styled.div`
   background-position-x: center;
 `
 
-const LogoIcon = styled.img.attrs({
-  width: (props: any) => props.width
-})``
-
-const LogoTitle = styled.img.attrs({
-  width: '600px'
-})``
-
 const TitleContainer = styled.div`
   max-width: 817px;
   width: 100%;
@@ -38,15 +29,8 @@ const TitleContainer = styled.div`
 const Menu = styled.menu`
   height: 76px;
   padding-left: 43px;
-  padding-right: 34px;
   display: flex;
   justify-content: space-between;
-
-  img {
-    path {
-      display: none;
-    }
-  }
 `
 
 const LogoContainer = styled.div`
@@ -59,18 +43,32 @@ const List = styled.ul`
   list-style: none;
   display: flex;
   align-items: center;
+  float: left;
 `
 
-const Item = styled.li`
+const Item: any = styled.li`
   width: 110px;
   height: 100%;
   font-size: 16px;
   text-align: center;
   line-height: 76px;
   cursor: pointer;
+  color: ${(props: any) =>
+    props.isActive ? props.theme.colors.main : '#9caeb7'};
 `
 
-const EmailIcon = styled.img``
+const EmailIcon = styled.a`
+  display: block;
+  float: right;
+  width: 84px;
+  height: 100%;
+  border-left: 2px solid #e5ecef;
+  background-image: url(${emailIcon});
+  background-size: 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+`
 
 const MenuContainer = styled.div``
 
@@ -91,24 +89,23 @@ export default class Main extends React.Component {
       <div>
         <ImageContainer>
           <TitleContainer>
-            <LogoIcon src={logoIcon} width="180px" alt="logo" />
-            <LogoTitle src={logoTitle} alt="flugauto" />
+            <Logo width="815px" />
           </TitleContainer>
         </ImageContainer>
         <Menu>
           <LogoContainer>
-            <LogoIcon src={logoIconBlack} alt="logo" width="50px" />
+            <Logo width="233px" fill="#052554" />
           </LogoContainer>
           <MenuContainer>
             <List>
               <Item>Home</Item>
-              <Item>News</Item>
+              <Item isActive>News</Item>
               <Item>Mission</Item>
               <Item>Timeline</Item>
               <Item>Team</Item>
               <Item>Partners</Item>
             </List>
-            <EmailIcon />
+            <EmailIcon href="mailto:test@test.com" />
           </MenuContainer>
         </Menu>
         <News>
