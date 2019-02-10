@@ -8,9 +8,10 @@ const Item: any = styled.div`
   flex-flow: column;
   justify-content: space-between;
   width: ${(props: any) => props.width}px;
-  height: 266px;
+  min-height: 266px;
   padding: 41px 35px;
   box-sizing: border-box;
+  transition: height 0.3s ease-in-out;
 `
 
 const Date = styled.p`
@@ -39,6 +40,7 @@ const ReadMoreText = styled.span``
 const ReadMoreButton = styled.button`
   display: flex;
   align-items: center;
+  margin-top: 20px;
   padding-left: 0;
   padding-right: 0;
   color: #00a4f3;

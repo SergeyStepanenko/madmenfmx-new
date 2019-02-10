@@ -5,13 +5,13 @@ import styled from 'src/styled-components'
 import ScreenService from 'src/services/ScreenService'
 
 import Logo from 'src/assets/svgr/Logo'
+import Menu from 'src/components/Menu'
 import Carousel from 'src/components/Carousel'
-import DeliveryItem from 'src/components/Delivery'
-
+// import Info from 'src/components/Info'
+import Misson from 'src/components/Mission'
+import TurnKeySolution from 'src/components/TurnKeySolution'
 import homeImage from 'src/assets/home.jpg'
-import missionImage from 'src/assets/mission.jpg'
-import emailIcon from 'src/assets/email.svg'
-import benefitsImage from 'src/assets/benefits.svg'
+import logoMobile from 'src/assets/logo_icon.svg'
 
 import map1 from 'src/assets/map_1.jpg'
 import map2 from 'src/assets/map_2.jpg'
@@ -50,42 +50,6 @@ const LogoContainer = styled.div`
   margin-left: 43px;
 `
 
-const List = styled.ul`
-  padding: 0;
-  list-style: none;
-  display: flex;
-  align-items: center;
-  float: left;
-`
-
-const Item: any = styled.li`
-  width: 110px;
-  height: 100%;
-  font-size: 16px;
-  text-align: center;
-  line-height: 76px;
-  cursor: pointer;
-  color: ${(props: any) =>
-    props.isActive ? props.theme.colors.main : '#9caeb7'};
-  font-family: Avenir Medium;
-`
-
-const EmailIcon = styled.a`
-  display: block;
-  float: right;
-  margin-left: 30px;
-  width: 84px;
-  height: 100%;
-  border-left: 2px solid #e5ecef;
-  background-image: url(${emailIcon});
-  background-size: 20px;
-  background-repeat: no-repeat;
-  background-position: center;
-  cursor: pointer;
-`
-
-const Menu = styled.menu``
-
 const News = styled.section`
   padding-top: 52px;
   padding-right: 12px;
@@ -116,135 +80,30 @@ const MoreNewsButton = styled.button`
   outline: none;
 `
 
-const Mission = styled.section`
-  min-height: 673px;
-  padding-top: 165px;
-  padding-bottom: 165px;
-  padding-right: 12px;
-  padding-left: 12px;
-  background-image: url(${missionImage});
-  background-size: cover;
-  background-position-x: center;
-  background-repeat: no-repeat;
-`
-
-const MissionTitle = styled.h3`
-  font-size: 55px;
-  font-family: Avenir Next Bold;
-  color: #fff;
-  text-align: center;
-`
-
-const UnderlinedText = styled.p`
-  display: inline;
-  border-bottom: 4px solid #00a8f3;
-  line-height: 56px;
-  font-family: Avenir Next Bold;
-`
-
-const MissionDescription = styled(UnderlinedText)`
-  display: inline-block;
-  position: relative;
-  left: 50%;
-  transform: translate(-50%);
-  font-size: 35px;
-  color: #fff;
-  text-align: center;
-`
-
-const MissionDescContainer = styled.div`
-  max-width: 600px;
-  margin: 40px auto 0;
-`
-
-const MissionInfo = styled.p`
-  max-width: 654px;
-  color: #fff;
-  font-family: Open Sans;
-  text-align: center;
-  margin-top: 54px;
-  margin-right: auto;
-  margin-left: auto;
-  line-height: 31px;
-`
-
-const Info = styled.section`
-  max-width: 1090px;
-  margin: 0 auto;
-  padding-top: 146px;
-  padding-right: 12px;
-  padding-left: 12px;
-`
-
-const Helicopter = styled.div``
-
-const HeliDescripionBlock = styled.div`
-  display: inline-block;
-  width: 50%;
-  padding-right: 50px;
-`
-
-const HeliTitle = styled(UnderlinedText)`
-  color: #000;
-  font-size: 35px;
-`
-
-const HeliDescripion = styled.div`
-  margin-top: 40px;
-  font-family: Open Sans;
-  line-height: 31px;
-`
-
-const HeliChartBlock = styled.div`
-  display: inline-block;
-  width: 50%;
-  height: 350px;
-  background-image: url(${benefitsImage});
-  background-repeat: no-repeat;
-`
-
-const DeliveryComparisonBlock = styled.div`
-  display: flex;
-  width: 60%;
-
-  > div:first-of-type {
-    z-index: 1;
-  }
-
-  > div:last-of-type {
-    transform: translate(-30px, 30px);
-  }
-`
-
-const Delivery = styled.div`
-  display: flex;
-  margin-top: 131px;
-`
-
-const DeliveryDescBlock = styled.div`
-  margin-top: 130px;
-  margin-left: 50px;
-  width: 40%;
-  padding-right: 50px;
-`
-
-const Maps = styled.div`
+const Maps = styled.section`
   margin-top: 109px;
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 `
 
-const Map1 = styled.img`
-  width: 900px;
+const Map: any = styled.img`
+  width: ${({ isTablet }: any) => (isTablet ? '100%' : '900px')};
 `
 
-const Map2 = styled.img`
-  width: 900px;
+const MobileLogoContainer = styled.div`
+  text-align: center;
+`
+
+const LogoMobile = styled.img`
+  width: 280px;
 `
 
 export default class Main extends React.Component {
   state = {
-    isMobile: this.isMobile
+    isTablet: this.isTablet,
+    isMobile: this.isMobile,
+    isMobileSmall: this.isMobileSmall
   }
 
   wrapperRef = React.createRef()
@@ -253,8 +112,16 @@ export default class Main extends React.Component {
     this.listenResize()
   }
 
-  get isMobile() {
+  get isTablet() {
     return window.innerWidth < 991
+  }
+
+  get isMobile() {
+    return window.innerWidth <= 767
+  }
+
+  get isMobileSmall() {
+    return window.innerWidth <= 454
   }
 
   listenResize() {
@@ -263,98 +130,54 @@ export default class Main extends React.Component {
   }
 
   onResize = debounce(() => {
-    const isMobile = this.isMobile
-
-    if (isMobile === this.state.isMobile) {
-      return
-    }
-
-    this.setState({ isMobile })
-  }, 50)
+    this.setState({
+      isTablet: this.isTablet,
+      isMobile: this.isMobile
+    })
+  }, 20)
 
   render() {
-    // const { isMobile } = this.state
+    const { isTablet, isMobile, isMobileSmall } = this.state
 
     return (
       <Wrapper>
         <ImageContainer>
           <TitleContainer>
-            <Logo width="815px" />
+            {isTablet ? (
+              <MobileLogoContainer>
+                <LogoMobile src={logoMobile} />
+              </MobileLogoContainer>
+            ) : (
+              <Logo width="815px" />
+            )}
           </TitleContainer>
         </ImageContainer>
         <MenuSection>
           <LogoContainer>
             <Logo width="233px" fill="#052554" />
           </LogoContainer>
-          <Menu>
-            <List>
-              <Item>Home</Item>
-              <Item isActive>News</Item>
-              <Item>Mission</Item>
-              <Item>Timeline</Item>
-              <Item>Team</Item>
-              <Item>Partners</Item>
-            </List>
-            <EmailIcon href="mailto:info@flug-auto.com" />
-          </Menu>
+          <Menu isTablet={isTablet} />
         </MenuSection>
         <News>
           <NewsTitle>News</NewsTitle>
-          <Carousel />
+          <Carousel
+            isTablet={isTablet}
+            isMobile={isMobile}
+            isMobileSmall={isMobileSmall}
+          />
           <MoreNewsButton>More news</MoreNewsButton>
         </News>
-        <Mission>
-          <MissionTitle>Mission</MissionTitle>
-          <MissionDescContainer>
-            <MissionDescription>
-              Enabling instant access to goods
-            </MissionDescription>
-            <MissionDescription>for everyone, everywhere</MissionDescription>
-          </MissionDescContainer>
-          <MissionInfo>
-            We believe the next big thing in logistics is near-instant delivery
-            of goods. As an innovative and tech-driven B2B logistics provider,
-            we have embarked on a journey to revolutionize how cargo is moved by
-            providing air transportation for various applications, and we are
-            focused on disrupting the miles before the "last-mile" delivery.
-          </MissionInfo>
-        </Mission>
-        <Info>
-          <Helicopter>
-            <HeliDescripionBlock>
-              <HeliTitle>
-                The benefits of a helicopter at the price of a car
-              </HeliTitle>
-              <HeliDescripion>
-                For businesses that want to transport cargo, we are the
-                logistics provider of the sky, as we offer them the benefits of
-                a helicopter, that is speed and access to remote locations, but
-                at the cost of using a conventional car or van. We do this by
-                leveraging our proprietary drone technology, capable of carrying
-                up to 500lbs, over 150miles.
-              </HeliDescripion>
-            </HeliDescripionBlock>
-            <HeliChartBlock />
-          </Helicopter>
-          <Delivery>
-            <DeliveryComparisonBlock>
-              <DeliveryItem />
-              <DeliveryItem isAltered />
-            </DeliveryComparisonBlock>
-            <DeliveryDescBlock>
-              <HeliTitle>Deliver anywhere within hours</HeliTitle>
-              <HeliDescripion>
-                Imagine a world where you could deliver a package anywhere in
-                the US in under 3 hrs, even to the most remote town. This is the
-                vision we are working towards here at Flugauto.
-              </HeliDescripion>
-            </DeliveryDescBlock>
-          </Delivery>
-        </Info>
+        <Misson isTablet={isTablet} isMobile={isMobile} />
+        {/* <Info isTablet={isTablet} /> */}
         <Maps>
-          <Map1 src={map1} alt="flugauto" />
-          <Map2 src={map2} alt="conventional way" />
+          <picture>
+            <Map isTablet={isTablet} src={map1} alt="flugauto" />
+          </picture>
+          <picture>
+            <Map isTablet={isTablet} src={map2} alt="conventional way" />
+          </picture>
         </Maps>
+        <TurnKeySolution isTablet={isTablet} isMobile={isMobile} />
       </Wrapper>
     )
   }

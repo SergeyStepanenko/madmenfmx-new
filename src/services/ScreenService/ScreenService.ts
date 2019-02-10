@@ -34,7 +34,7 @@ export interface ScreenService {
   // @ts-ignore
   offScroll(handler: ObserverHandler)
   getData(): ScreenScrollData
-  getIsMobile(mobileBreakPoint: number): boolean
+  getisTablet(mobileBreakPoint: number): boolean
 }
 
 /* istanbul ignore next */
@@ -149,7 +149,7 @@ export const createScreenService = (): ScreenService | undefined => {
     _scrollObserver.unsubscribe(handler)
   }
 
-  const getIsMobile = (mobileBreakPoint: number) => {
+  const getisTablet = (mobileBreakPoint: number) => {
     return mobileBreakPoint >= getScrollParams(false).windowWidth
   }
 
@@ -216,7 +216,7 @@ export const createScreenService = (): ScreenService | undefined => {
     getData() {
       return getScrollParams(false)
     },
-    getIsMobile
+    getisTablet
   }
 }
 
