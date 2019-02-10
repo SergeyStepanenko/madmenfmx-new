@@ -1,5 +1,8 @@
 import * as React from 'react'
+import { debounce } from 'lodash-es'
 import styled from 'src/styled-components'
+
+import ScreenService from 'src/services/ScreenService'
 
 import Logo from 'src/assets/svgr/Logo'
 import Carousel from 'src/components/Carousel'
@@ -10,7 +13,12 @@ import missionImage from 'src/assets/mission.jpg'
 import emailIcon from 'src/assets/email.svg'
 import benefitsImage from 'src/assets/benefits.svg'
 
-const ImageContainer = styled.div`
+import map1 from 'src/assets/map_1.jpg'
+import map2 from 'src/assets/map_2.jpg'
+
+const Wrapper: any = styled.div``
+
+const ImageContainer = styled.section`
   width: 100%;
   height: 630px;
   display: flex;
@@ -22,7 +30,7 @@ const ImageContainer = styled.div`
   background-position-x: center;
 `
 
-const TitleContainer = styled.div`
+const TitleContainer = styled.h1`
   max-width: 817px;
   width: 100%;
   display: flex;
@@ -30,7 +38,7 @@ const TitleContainer = styled.div`
   justify-content: center;
 `
 
-const Menu = styled.menu`
+const MenuSection = styled.section`
   height: 76px;
   display: flex;
   justify-content: space-between;
@@ -76,11 +84,13 @@ const EmailIcon = styled.a`
   cursor: pointer;
 `
 
-const MenuContainer = styled.div``
+const Menu = styled.menu``
 
 const News = styled.section`
   padding-top: 52px;
+  padding-right: 12px;
   padding-bottom: 65px;
+  padding-left: 12px;
   background-color: #f2f6f7;
 `
 
@@ -110,6 +120,8 @@ const Mission = styled.section`
   min-height: 673px;
   padding-top: 165px;
   padding-bottom: 165px;
+  padding-right: 12px;
+  padding-left: 12px;
   background-image: url(${missionImage});
   background-size: cover;
   background-position-x: center;
@@ -160,6 +172,8 @@ const Info = styled.section`
   max-width: 1090px;
   margin: 0 auto;
   padding-top: 146px;
+  padding-right: 12px;
+  padding-left: 12px;
 `
 
 const Helicopter = styled.div``
@@ -190,38 +204,89 @@ const HeliChartBlock = styled.div`
 `
 
 const DeliveryComparisonBlock = styled.div`
-  display: inline-block;
+  display: flex;
   width: 60%;
 
-  > div {
-    display: inline-block;
+  > div:first-of-type {
+    z-index: 1;
+  }
+
+  > div:last-of-type {
+    transform: translate(-30px, 30px);
   }
 `
 
 const Delivery = styled.div`
+  display: flex;
   margin-top: 131px;
 `
 
 const DeliveryDescBlock = styled.div`
-  display: inline-block;
+  margin-top: 130px;
+  margin-left: 50px;
   width: 40%;
   padding-right: 50px;
 `
 
+const Maps = styled.div`
+  margin-top: 109px;
+  display: flex;
+  justify-content: center;
+`
+
+const Map1 = styled.img`
+  width: 900px;
+`
+
+const Map2 = styled.img`
+  width: 900px;
+`
+
 export default class Main extends React.Component {
+  state = {
+    isMobile: this.isMobile
+  }
+
+  wrapperRef = React.createRef()
+
+  componentDidMount() {
+    this.listenResize()
+  }
+
+  get isMobile() {
+    return window.innerWidth < 991
+  }
+
+  listenResize() {
+    // @ts-ignore
+    ScreenService.onResize(this.onResize)
+  }
+
+  onResize = debounce(() => {
+    const isMobile = this.isMobile
+
+    if (isMobile === this.state.isMobile) {
+      return
+    }
+
+    this.setState({ isMobile })
+  }, 50)
+
   render() {
+    // const { isMobile } = this.state
+
     return (
-      <div>
+      <Wrapper>
         <ImageContainer>
           <TitleContainer>
             <Logo width="815px" />
           </TitleContainer>
         </ImageContainer>
-        <Menu>
+        <MenuSection>
           <LogoContainer>
             <Logo width="233px" fill="#052554" />
           </LogoContainer>
-          <MenuContainer>
+          <Menu>
             <List>
               <Item>Home</Item>
               <Item isActive>News</Item>
@@ -231,8 +296,8 @@ export default class Main extends React.Component {
               <Item>Partners</Item>
             </List>
             <EmailIcon href="mailto:info@flug-auto.com" />
-          </MenuContainer>
-        </Menu>
+          </Menu>
+        </MenuSection>
         <News>
           <NewsTitle>News</NewsTitle>
           <Carousel />
@@ -286,7 +351,11 @@ export default class Main extends React.Component {
             </DeliveryDescBlock>
           </Delivery>
         </Info>
-      </div>
+        <Maps>
+          <Map1 src={map1} alt="flugauto" />
+          <Map2 src={map2} alt="conventional way" />
+        </Maps>
+      </Wrapper>
     )
   }
 }
