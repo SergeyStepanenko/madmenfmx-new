@@ -4,6 +4,7 @@ import styled, { css } from 'src/styled-components'
 import CarouselItem from 'src/components/CarouselItem'
 import ArrowCarousel from 'src/assets/svgr/ArrowCarousel'
 import ScreenService from 'src/services/ScreenService'
+import * as S from 'src/styles'
 
 const Container: any = styled.div`
   display: flex;
@@ -29,15 +30,7 @@ const ListWrapper: any = styled.div`
   box-shadow: 0px 0px 5px 0px rgba(0, 30, 44, 0.05);
 `
 
-const Button: any = styled.button`
-  padding: 0;
-  border: 0;
-  outline: none;
-  background-color: transparent;
-  cursor: ${(props: any) => (props.isActive ? 'pointer' : 'default')};
-`
-
-const ArrowRightButton: any = styled(Button)`
+const ArrowRightButton: any = styled(S.Button)`
   ${({ isTablet, isMobile }: any): any => {
     if (isTablet && !isMobile) {
       return css`
@@ -60,7 +53,7 @@ const ArrowRightButton: any = styled(Button)`
   }}
 `
 
-const ArrowLeftButton: any = styled(Button)`
+const ArrowLeftButton: any = styled(S.Button)`
   svg {
     transform: rotate(180deg);
   }

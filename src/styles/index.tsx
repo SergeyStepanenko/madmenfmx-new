@@ -6,3 +6,22 @@ export const UnderlinedText = styled.p`
   line-height: 56px;
   font-family: Avenir Next Bold;
 `
+
+export const Title = styled.h3`
+  font-size: 55px;
+  font-family: Avenir Next Bold;
+  color: #000;
+  text-align: center;
+`
+
+export const Subtitle = styled(UnderlinedText)`
+  font-size: 35px;
+`
+
+export const Button: any = styled.button`
+  padding: 0;
+  border: 0;
+  outline: none;
+  background-color: transparent;
+  cursor: ${(props: any) => (props.isActive ? 'pointer' : 'default')};
+`

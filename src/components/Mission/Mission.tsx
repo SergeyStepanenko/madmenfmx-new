@@ -23,10 +23,7 @@ const MissionTitle = styled.h3`
 `
 
 const MissionDescription = styled(S.UnderlinedText)`
-  display: inline-block;
   position: relative;
-  left: 50%;
-  transform: translate(-50%);
   font-size: 35px;
   color: #fff;
   text-align: center;
@@ -56,9 +53,8 @@ export default function Mission(props: any) {
       <MissionTitle>Mission</MissionTitle>
       <MissionDescContainer>
         <MissionDescription>
-          Enabling instant access to goods
+          Enabling instant access to goods for everyone, everywhere
         </MissionDescription>
-        <MissionDescription>for everyone, everywhere</MissionDescription>
       </MissionDescContainer>
       <MissionInfo>
         We believe the next big thing in logistics is near-instant delivery of

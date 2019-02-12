@@ -7,8 +7,10 @@ import ScreenService from 'src/services/ScreenService'
 import Logo from 'src/assets/svgr/Logo'
 import Menu from 'src/components/Menu'
 import Carousel from 'src/components/Carousel'
-// import Info from 'src/components/Info'
+import Info from 'src/components/Info'
 import Misson from 'src/components/Mission'
+import Timeline from 'src/components/Timeline'
+import Team from 'src/components/Team'
 import TurnKeySolution from 'src/components/TurnKeySolution'
 import homeImage from 'src/assets/home.jpg'
 import logoMobile from 'src/assets/logo_icon.svg'
@@ -137,7 +139,11 @@ export default class Main extends React.Component {
   }, 20)
 
   render() {
-    const { isTablet, isMobile, isMobileSmall } = this.state
+    const {
+      isTablet,
+      isMobile
+      // isMobileSmall
+    } = this.state
 
     return (
       <Wrapper>
@@ -160,15 +166,11 @@ export default class Main extends React.Component {
         </MenuSection>
         <News>
           <NewsTitle>News</NewsTitle>
-          <Carousel
-            isTablet={isTablet}
-            isMobile={isMobile}
-            isMobileSmall={isMobileSmall}
-          />
+          <Carousel isTablet={isTablet} isMobile={isMobile} />
           <MoreNewsButton>More news</MoreNewsButton>
         </News>
         <Misson isTablet={isTablet} isMobile={isMobile} />
-        {/* <Info isTablet={isTablet} /> */}
+        <Info isTablet={isTablet} />
         <Maps>
           <picture>
             <Map isTablet={isTablet} src={map1} alt="flugauto" />
@@ -178,6 +180,8 @@ export default class Main extends React.Component {
           </picture>
         </Maps>
         <TurnKeySolution isTablet={isTablet} isMobile={isMobile} />
+        <Timeline isMobile={isMobile} />
+        <Team isMobile={isMobile} />
       </Wrapper>
     )
   }
