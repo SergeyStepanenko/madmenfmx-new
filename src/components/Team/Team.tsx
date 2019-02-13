@@ -102,10 +102,11 @@ const Container: any = styled.div`
   overflow: hidden;
 `
 
-const Block: any = styled.div`
+const Block: any = styled.div<{ shift: number }>`
   width: ${(props: any) => props.blockWidth}px;
   margin-left: auto;
   margin-right: auto;
+  transform: ${(props) => `translateX(${-props.shift}px)`};
   transition: transform 0.3s ease-in-out;
 `
 
@@ -137,13 +138,17 @@ const Carousel = styled.div`
   margin-top: 60px;
 `
 
-const ArrowLeftButton = styled(S.Button)`
+const Button = styled(S.Button)`
+  padding: 34px;
+`
+
+const ArrowLeftButton = styled(Button)`
   svg {
     transform: rotate(180deg);
   }
 `
 
-const ArrowRightButton = styled(S.Button)``
+const ArrowRightButton = styled(Button)``
 
 function Item({ image, title, description, link, index }: any) {
   return (
@@ -160,6 +165,10 @@ function Item({ image, title, description, link, index }: any) {
 export default class Team extends React.Component<any> {
   // const { isTablet } = this.props
 
+  state = {
+    block: 0
+  }
+
   get blocksOnScreen() {
     return 4
   }
@@ -172,12 +181,34 @@ export default class Team extends React.Component<any> {
     return this.blocksOnScreen * (width + padding * 2)
   }
 
+  get shift() {
+    const { block } = this.state
+
+    return block * (width + padding * 2)
+  }
+
   get leftArrowColor() {
-    return '#aaacad'
+    return this.isLeftArrowActive ? '#000' : '#aaacad'
   }
 
   get rightArrowColor() {
-    return '#aaacad'
+    return this.isRightArrowActive ? '#000' : '#aaacad'
+  }
+
+  get isLeftArrowActive() {
+    const { block } = this.state
+
+    return block !== 0
+  }
+
+  get isRightArrowActive() {
+    return this.isCanMoveToLeft
+  }
+
+  get isCanMoveToLeft() {
+    const { block } = this.state
+
+    return block + this.blocksOnScreen < items.length
   }
 
   render() {
@@ -205,13 +236,13 @@ export default class Team extends React.Component<any> {
         </Info>
         <Carousel>
           <ArrowLeftButton
-          // isActive={slide > 1}
-          // onClick={this.handleLeftArrowClick}
+            isActive={this.isLeftArrowActive}
+            onClick={this.handleLeftArrowClick}
           >
             <ArrowCarousel fill={this.leftArrowColor} />
           </ArrowLeftButton>
           <Container containerWidth={this.containerWidth}>
-            <Block blockWidth={this.blockWidth}>
+            <Block shift={this.shift} blockWidth={this.blockWidth}>
               {items.map(({ image, title, description, link }: any, index) => (
                 <Item
                   key={title}
@@ -224,11 +255,54 @@ export default class Team extends React.Component<any> {
               ))}
             </Block>
           </Container>
-          <ArrowRightButton>
-            <ArrowCarousel fill={this.leftArrowColor} />
+          <ArrowRightButton
+            isActive={this.isRightArrowActive}
+            onClick={this.handleRightArrowClick}
+          >
+            <ArrowCarousel fill={this.rightArrowColor} />
           </ArrowRightButton>
         </Carousel>
       </TeamSection>
     )
+  }
+
+  handleLeftArrowClick = () => {
+    const { block } = this.state
+
+    const isCanMove = block > 0
+
+    if (!isCanMove) {
+      return
+    }
+
+    let nextBlock
+
+    if (block <= this.blocksOnScreen) {
+      nextBlock = 0
+    } else if (block > this.blocksOnScreen) {
+      nextBlock = block - this.blocksOnScreen
+    }
+
+    this.setState({ block: nextBlock })
+  }
+
+  handleRightArrowClick = () => {
+    const { block } = this.state
+    const isCanMove = block + this.blocksOnScreen < items.length
+
+    if (!isCanMove) {
+      return
+    }
+
+    let nextBlock = block + this.blocksOnScreen
+    const isEdgeCase = nextBlock + this.blocksOnScreen >= items.length
+
+    if (isEdgeCase) {
+      const space = items.length % 2
+
+      nextBlock = nextBlock - (this.blocksOnScreen - space)
+    }
+
+    this.setState({ block: nextBlock })
   }
 }
