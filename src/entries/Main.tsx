@@ -19,7 +19,7 @@ import logoMobile from 'src/assets/logo_icon.svg'
 
 const Wrapper: any = styled.div``
 
-const ImageContainer = styled.section`
+const ImageSection = styled.section`
   width: 100%;
   height: 630px;
   display: flex;
@@ -39,19 +39,7 @@ const TitleContainer = styled.h1`
   justify-content: center;
 `
 
-const MenuSection = styled.section`
-  height: 76px;
-  display: flex;
-  justify-content: space-between;
-`
-
-const LogoContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-left: 43px;
-`
-
-const News = styled.section`
+const News: any = styled.section`
   padding-top: 52px;
   padding-right: 12px;
   padding-bottom: 65px;
@@ -93,13 +81,15 @@ export default class Main extends React.Component {
   state = {
     isTablet: this.isTablet,
     isMobile: this.isMobile,
-    isMobileSmall: this.isMobileSmall
+    isMobileSmall: this.isMobileSmall,
+    isTitleFixed: false
   }
 
-  wrapperRef = React.createRef()
+  positions = []
 
   componentDidMount() {
     this.listenResize()
+    this.getSectionsPositions()
   }
 
   get isTablet() {
@@ -114,6 +104,27 @@ export default class Main extends React.Component {
     return window.innerWidth <= 454
   }
 
+  getSectionsPositions() {
+    if (!this.wrapperRef || !this.wrapperRef.current) {
+      return
+    }
+
+    // @ts-ignore
+    const { children } = this.wrapperRef.current || []
+
+    children.reduce = [].reduce
+
+    this.positions = children.reduce(
+      (acc: any, item: any) => ({
+        ...acc,
+        [item.id]: item.getBoundingClientRect().top
+      }),
+      {}
+    )
+
+    console.log(this.positions)
+  }
+
   listenResize() {
     // @ts-ignore
     ScreenService.onResize(this.onResize)
@@ -126,12 +137,15 @@ export default class Main extends React.Component {
     })
   }, 20)
 
+  wrapperRef = React.createRef()
+  newsRef = React.createRef()
+
   render() {
-    const { isTablet, isMobile } = this.state
+    const { isTablet, isMobile, isTitleFixed } = this.state
 
     return (
-      <Wrapper>
-        {/* <ImageContainer>
+      <Wrapper ref={this.wrapperRef}>
+        <ImageSection id="logo">
           <TitleContainer>
             {isTablet ? (
               <MobileLogoContainer>
@@ -141,25 +155,24 @@ export default class Main extends React.Component {
               <Logo width="815px" />
             )}
           </TitleContainer>
-        </ImageContainer>
-        <MenuSection>
-          <LogoContainer>
-            <Logo width="233px" fill="#052554" />
-          </LogoContainer>
-          <Menu isTablet={isTablet} />
-        </MenuSection>
-        <News>
+        </ImageSection>
+        <Menu id="menu" isMobile={isMobile} />
+        <News id="news" ref={this.newsRef}>
           <NewsTitle>News</NewsTitle>
           <Carousel isTablet={isTablet} isMobile={isMobile} />
           <MoreNewsButton>More news</MoreNewsButton>
         </News>
-        <Misson isTablet={isTablet} isMobile={isMobile} />
-        <Info isTablet={isTablet} />
-        <Maps isMobile={isMobile} />
-        <TurnKeySolution isTablet={isTablet} isMobile={isMobile} />
-        <Timeline isMobile={isMobile} /> */}
-        {/* <Team isMobile={isMobile} /> */}
-        <Partners isMobile={isMobile} />
+        <Misson id="mission" isTablet={isTablet} isMobile={isMobile} />
+        <Info id="info" isTablet={isTablet} />
+        <Maps id="maps" isMobile={isMobile} />
+        <TurnKeySolution
+          id="keySolution"
+          isTablet={isTablet}
+          isMobile={isMobile}
+        />
+        <Timeline id="timeline" isMobile={isMobile} />
+        <Team id="team" isMobile={isMobile} />
+        <Partners id="partners" isMobile={isMobile} />
       </Wrapper>
     )
   }

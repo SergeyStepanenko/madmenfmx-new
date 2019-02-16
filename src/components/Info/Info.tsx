@@ -85,10 +85,10 @@ const DeliveryDescBlock = styled.div`
 `
 
 export default function Info(props: any) {
-  const { isTablet } = props
+  const { isTablet, id } = props
 
   return (
-    <InfoSection>
+    <InfoSection id={id}>
       <Helicopter isTablet={isTablet}>
         <HeliDescripionBlock isTablet={isTablet}>
           <HeliTitle isTablet={isTablet}>

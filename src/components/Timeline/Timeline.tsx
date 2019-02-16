@@ -98,10 +98,10 @@ const items = [
 ]
 
 export default function Timeline(props: any) {
-  // const { isTablet } = props
+  const { id } = props
 
   return (
-    <TimelineSection>
+    <TimelineSection id={id}>
       <TimelineTitle>Timeline</TimelineTitle>
       <DesWrapper>
         <Description>Fully operational within 3 years</Description>

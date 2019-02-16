@@ -139,10 +139,10 @@ const Item = ({
 )
 
 export default function TurnKeySolution(props: any) {
-  const { isTablet, isMobile } = props
+  const { isTablet, isMobile, id } = props
 
   return (
-    <TurnKeySolutionWrapper isTablet={isTablet}>
+    <TurnKeySolutionWrapper id={id} isTablet={isTablet}>
       <TitleContainer>
         <Title isTablet={isTablet}>Turn-key solution</Title>
       </TitleContainer>

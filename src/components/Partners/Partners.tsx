@@ -38,8 +38,10 @@ const PartnersBlock = styled.div`
 `
 
 export default function Partners(props: any) {
+  const { id } = props
+
   return (
-    <PartnersSection>
+    <PartnersSection id={id}>
       <Title>Partners</Title>
       <PartnersBlock>
         <Image src={partner1Image} width="232px" alt="luxaviation" />

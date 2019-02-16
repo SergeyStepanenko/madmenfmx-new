@@ -14,9 +14,9 @@ const Map: any = styled.img`
   width: ${({ isTablet }: any) => (isTablet ? '100%' : '900px')};
 `
 
-export default function Maps({ isTablet }: any) {
+export default function Maps({ isTablet, id }: any) {
   return (
-    <MapsSection>
+    <MapsSection id={id}>
       <picture>
         <Map isTablet={isTablet} src={map1} alt="flugauto" />
       </picture>

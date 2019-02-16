@@ -280,10 +280,11 @@ export default class Team extends React.Component<any> {
   }
 
   render() {
+    const { id } = this.props
     const { block } = this.state
 
     return (
-      <TeamSection>
+      <TeamSection id={id}>
         <TeamTitle>Team</TeamTitle>
         <DesWrapper>
           <Description>

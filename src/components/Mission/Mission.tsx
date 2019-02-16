@@ -46,10 +46,10 @@ const MissionInfo = styled.p`
 `
 
 export default function Mission(props: any) {
-  // const { isTablet } = props
+  const { id } = props
 
   return (
-    <MissionSection>
+    <MissionSection id={id}>
       <MissionTitle>Mission</MissionTitle>
       <MissionDescContainer>
         <MissionDescription>
