@@ -1,5 +1,7 @@
 import * as React from 'react'
 import { debounce } from 'lodash-es'
+// @ts-ignore
+import { Swipeable } from 'react-swipeable'
 import styled from 'src/styled-components'
 import * as S from 'src/styles'
 import ScreenService from 'src/services/ScreenService'
@@ -55,6 +57,10 @@ const TeamSection = styled.section`
   background-color: #f1f5f7;
   padding-top: 70px;
   padding-bottom: 92px;
+
+  @media (max-width: 768px) {
+    padding-top: 53px;
+  }
 `
 
 const TeamTitle = styled(S.Title)``
@@ -124,6 +130,7 @@ const Block: any = styled.div<{ shift: number }>`
   margin-right: auto;
   transform: ${(props) => `translateX(${-props.shift}px)`};
   transition: transform 0.3s ease-in-out;
+  touch-action: none;
 `
 
 const ItemImage = styled.img`
@@ -191,7 +198,8 @@ function Item({ image, title, description, link, index }: any) {
 export default class Team extends React.Component<any> {
   state = {
     block: 0,
-    blocksOnScreen: this.blocksOnScreen
+    blocksOnScreen: this.blocksOnScreen,
+    windowWidth: window.innerWidth
   }
 
   componentDidMount() {
@@ -203,10 +211,15 @@ export default class Team extends React.Component<any> {
     ScreenService.onResize(this.onResize)
   }
 
-  onResize = debounce(() => {
+  onResize = debounce(({ windowWidth }) => {
+    if (this.state.windowWidth === windowWidth) {
+      return
+    }
+
     this.setState({
       blocksOnScreen: this.blocksOnScreen,
-      block: 0
+      block: 0,
+      windowWidth
     })
   }, 20)
 
@@ -295,20 +308,28 @@ export default class Team extends React.Component<any> {
           >
             <ArrowCarousel fill={this.leftArrowColor} />
           </ArrowLeftButton>
-          <Container containerWidth={this.containerWidth}>
-            <Block shift={this.shift} blockWidth={this.blockWidth}>
-              {items.map(({ image, title, description, link }: any, index) => (
-                <Item
-                  key={title}
-                  index={index}
-                  image={image}
-                  title={title}
-                  description={description}
-                  link={link}
-                />
-              ))}
-            </Block>
-          </Container>
+          <Swipeable
+            onSwipedLeft={this.handleSwipeLeft}
+            onSwipedRight={this.handleSwipeRight}
+            preventDefaultTouchmoveEvent
+          >
+            <Container containerWidth={this.containerWidth}>
+              <Block shift={this.shift} blockWidth={this.blockWidth}>
+                {items.map(
+                  ({ image, title, description, link }: any, index) => (
+                    <Item
+                      key={title}
+                      index={index}
+                      image={image}
+                      title={title}
+                      description={description}
+                      link={link}
+                    />
+                  )
+                )}
+              </Block>
+            </Container>
+          </Swipeable>
           <ArrowRightButton
             isActive={this.isRightArrowActive}
             onClick={this.handleRightArrowClick}
@@ -319,6 +340,7 @@ export default class Team extends React.Component<any> {
         <PointsContainer>
           {items.map((_, index) => (
             <S.Point
+              key={index}
               isActive={block === index}
               onClick={() => this.handlePointClick(index)}
             />
@@ -326,6 +348,13 @@ export default class Team extends React.Component<any> {
         </PointsContainer>
       </TeamSection>
     )
+  }
+
+  handleSwipeLeft = (event: any) => {
+    this.handleRightArrowClick()
+  }
+  handleSwipeRight = (event: any) => {
+    this.handleLeftArrowClick()
   }
 
   handlePointClick = (index: any) => {
