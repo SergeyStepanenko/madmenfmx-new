@@ -62,10 +62,19 @@ const TeamTitle = styled(S.Title)``
 const Description = styled(S.Subtitle)``
 
 const DesWrapper = styled.div`
+  max-width: 760px;
   margin-top: 45px;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+
+  @media (max-width: 860px) {
+    max-width: 630px;
+  }
+
+  @media (max-width: 750px) {
+    max-width: 630px;
+  }
 `
 
 const Info = styled.div`
@@ -77,6 +86,11 @@ const Info = styled.div`
   margin-left: auto;
   margin-right: auto;
   line-height: 32px;
+  text-align: center;
+
+  @media (max-width: 970px) {
+    max-width: 640px;
+  }
 `
 
 const ItemInner: any = styled.div`
@@ -142,6 +156,16 @@ const Carousel = styled.div`
 
 const Button = styled(S.Button)`
   padding: 34px;
+
+  @media (max-width: 475px) {
+    display: none;
+  }
+`
+
+const PointsContainer = styled(S.PointsContainer)`
+  @media (min-width: 475px) {
+    display: none;
+  }
 `
 
 const ArrowLeftButton = styled(Button)`
@@ -181,7 +205,8 @@ export default class Team extends React.Component<any> {
 
   onResize = debounce(() => {
     this.setState({
-      blocksOnScreen: this.blocksOnScreen
+      blocksOnScreen: this.blocksOnScreen,
+      block: 0
     })
   }, 20)
 
@@ -196,7 +221,11 @@ export default class Team extends React.Component<any> {
       return 3
     }
 
-    return 2
+    if (width < 1045 && width > 765) {
+      return 2
+    }
+
+    return 1
   }
 
   get blockWidth() {
@@ -238,27 +267,26 @@ export default class Team extends React.Component<any> {
   }
 
   render() {
+    const { block } = this.state
+
     return (
       <TeamSection>
         <TeamTitle>Team</TeamTitle>
         <DesWrapper>
-          <div>
-            <Description>
-              We are a world-class team of entrepreneurs,
-            </Description>
-          </div>
-          <div>
-            <Description>engineers, aviation and business experts</Description>
-          </div>
+          <Description>
+            We&nbsp;are a&nbsp;world-class team of entrepreneurs, engineers,
+            aviation and business experts
+          </Description>
         </DesWrapper>
         <Info>
-          Οur multi-disciplinary team of passionate entrepreneurs and aviation
-          experts has come together to develop and commercialize technology that
-          will revolutionize the transportation of cargo. Collectively our team
-          has research and work experience with leading academic institutions
-          and technology and business corporations including NASA, Airbus,
-          Google, BMW, IBM, McKinsey & Co., Georgia Tech and Stanford in the
-          USA, Europe and the Middle East.
+          &Omicron;ur multi-disciplinary team of&nbsp;passionate entrepreneurs
+          and aviation experts has come together to&nbsp;develop and
+          commercialize technology that will revolutionize the transportation
+          of&nbsp;cargo. Collectively our team has research and work experience
+          with leading academic institutions and technology and business
+          corporations including NASA, Airbus, Google, BMW, IBM, McKinsey
+          &amp;&nbsp;Co., Georgia Tech and Stanford in&nbsp;the USA, Europe and
+          the Middle East.
         </Info>
         <Carousel>
           <ArrowLeftButton
@@ -288,8 +316,20 @@ export default class Team extends React.Component<any> {
             <ArrowCarousel fill={this.rightArrowColor} />
           </ArrowRightButton>
         </Carousel>
+        <PointsContainer>
+          {items.map((_, index) => (
+            <S.Point
+              isActive={block === index}
+              onClick={() => this.handlePointClick(index)}
+            />
+          ))}
+        </PointsContainer>
       </TeamSection>
     )
+  }
+
+  handlePointClick = (index: any) => {
+    this.setState({ block: index })
   }
 
   handleLeftArrowClick = () => {
@@ -301,15 +341,7 @@ export default class Team extends React.Component<any> {
       return
     }
 
-    let nextBlock
-
-    if (block <= this.blocksOnScreen) {
-      nextBlock = 0
-    } else if (block > this.blocksOnScreen) {
-      nextBlock = block - this.blocksOnScreen
-    }
-
-    this.setState({ block: nextBlock })
+    this.setState({ block: block - 1 })
   }
 
   handleRightArrowClick = () => {
@@ -320,15 +352,6 @@ export default class Team extends React.Component<any> {
       return
     }
 
-    let nextBlock = block + this.blocksOnScreen
-    const isEdgeCase = nextBlock + this.blocksOnScreen >= items.length
-
-    if (isEdgeCase) {
-      const space = items.length % 2
-
-      nextBlock = nextBlock - (this.blocksOnScreen - space)
-    }
-
-    this.setState({ block: nextBlock })
+    this.setState({ block: block + 1 })
   }
 }

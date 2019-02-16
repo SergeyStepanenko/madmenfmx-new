@@ -25,3 +25,22 @@ export const Button: any = styled.button`
   background-color: transparent;
   cursor: ${(props: any) => (props.isActive ? 'pointer' : 'default')};
 `
+
+export const Point: any = styled.div`
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: ${({ isActive }: any) =>
+    isActive ? '#052554' : '#bad1da'};
+`
+
+export const PointsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+
+  & > * + * {
+    margin-left: 10px;
+  }
+`

@@ -80,25 +80,6 @@ const ArrowLeftButton: any = styled(S.Button)`
   }}
 `
 
-const Point: any = styled.div`
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: ${({ isActive }: any) =>
-    isActive ? '#052554' : '#bad1da'};
-`
-
-const PointsContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 30px;
-
-  & > * + * {
-    margin-left: 10px;
-  }
-`
-
 export default class Carousel extends React.Component<any> {
   state = {
     slide: 1,
@@ -235,15 +216,15 @@ export default class Carousel extends React.Component<any> {
           )}
         </Container>
         {isMobile && (
-          <PointsContainer>
+          <S.PointsContainer>
             {this.items.map((value, index) => (
-              <Point
+              <S.Point
                 key={index}
                 isActive={index + 1 === slide}
                 onClick={() => this.handlePointClick(index)}
               />
             ))}
-          </PointsContainer>
+          </S.PointsContainer>
         )}
       </div>
     )
