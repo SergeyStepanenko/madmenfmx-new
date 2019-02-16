@@ -158,8 +158,8 @@ export default class Main extends React.Component {
         <Maps isMobile={isMobile} />
         <TurnKeySolution isTablet={isTablet} isMobile={isMobile} />
         <Timeline isMobile={isMobile} /> */}
-        <Team isMobile={isMobile} />
-        {/* <Partners isMobile={isMobile} /> */}
+        {/* <Team isMobile={isMobile} /> */}
+        <Partners isMobile={isMobile} />
       </Wrapper>
     )
   }

@@ -22,8 +22,18 @@ const PartnersBlock = styled.div`
   justify-content: center;
   align-items: center;
 
-  & > * + * {
-    margin-left: 78px;
+  @media (min-width: 801px) {
+    & > * + * {
+      margin-left: 78px;
+    }
+  }
+
+  @media (max-width: 800px) {
+    flex-flow: column;
+
+    & > * + * {
+      margin-top: 40px;
+    }
   }
 `
 
