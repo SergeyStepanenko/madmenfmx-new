@@ -3,7 +3,6 @@ import { debounce } from 'lodash-es'
 import styled from 'src/styled-components'
 
 import ScreenService from 'src/services/ScreenService'
-
 import Logo from 'src/assets/svgr/Logo'
 import Menu from 'src/components/Menu'
 import Carousel from 'src/components/Carousel'
@@ -81,7 +80,6 @@ export default class Main extends React.Component {
   state = {
     isTablet: this.isTablet,
     isMobile: this.isMobile,
-    isMobileSmall: this.isMobileSmall,
     isTitleFixed: false
   }
 
@@ -97,10 +95,6 @@ export default class Main extends React.Component {
 
   get isMobile() {
     return window.innerWidth <= 767
-  }
-
-  get isMobileSmall() {
-    return window.innerWidth <= 454
   }
 
   listenResize() {
@@ -121,7 +115,7 @@ export default class Main extends React.Component {
     const { isTablet, isMobile } = this.state
 
     return (
-      <Wrapper id="wrapper" ref={this.wrapperRef}>
+      <Wrapper ref={this.wrapperRef}>
         <ImageSection id={this.menuItems[0]}>
           <TitleContainer>
             {isTablet ? (

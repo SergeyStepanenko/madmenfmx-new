@@ -1,9 +1,12 @@
 import * as React from 'react'
+import { debounce } from 'lodash-es'
 // @ts-ignore
 import scrollToElement from 'scroll-to-element'
+
 import styled, { css } from 'src/styled-components'
 import emailIcon from 'src/assets/email.svg'
 import Logo from 'src/assets/svgr/Logo'
+import ScreenService from 'src/services/ScreenService'
 
 const menuHeight = 76
 
@@ -71,23 +74,33 @@ const MenuBlock = styled.menu`
 
 export default class Menu extends React.PureComponent<any> {
   state = {
-    isHeaderFixed: false
+    isHeaderFixed: false,
+    headerScrollPosition: 0
   }
 
   node = null
   newsNode = null
-  wrapperNode = null
   menuRef = React.createRef()
 
   componentDidMount() {
     this.listenScroll()
+    this.listenResize()
     this.setNewsNode()
-    this.setWrapperNode()
+    this.setHeaderScrollPosition()
   }
 
   componentWillUnmount() {
     this.unlistedScroll()
   }
+
+  listenResize() {
+    // @ts-ignore
+    ScreenService.onResize(this.onResize)
+  }
+
+  onResize = debounce(() => {
+    this.setHeaderScrollPosition()
+  }, 20)
 
   listenScroll() {
     window.addEventListener('scroll', this.onScroll)
@@ -102,66 +115,34 @@ export default class Menu extends React.PureComponent<any> {
     this.newsNode = document.getElementById('news')
   }
 
-  setWrapperNode() {
-    // @ts-ignore
-    this.wrapperNode = document.getElementById('wrapper')
-  }
-
-  getSectionsPositions() {
-    if (!this.wrapperNode) {
+  setHeaderScrollPosition() {
+    if (!this.menuRef.current) {
       return
     }
 
-    // @ts-ignore
-    const { children } = this.wrapperNode || {}
+    const headerScrollPosition =
+      // @ts-ignore
+      this.menuRef.current.getBoundingClientRect().top + window.pageYOffset
 
-    if (!children) {
-      return
-    }
-
-    children.reduce = [].reduce
-
-    return children.reduce((acc: any, item: any) => {
-      const { id } = item
-
-      if (!id) {
-        return acc
-      }
-
-      // console.log('scrollTop >>> ', item.scrollTop)
-
-      return {
-        ...acc,
-        [item.id]: item.getBoundingClientRect().top
-      }
-    }, {})
+    this.setState({ headerScrollPosition })
   }
 
   onScroll = () => {
     const { isMobile } = this.props
-    const { isHeaderFixed } = this.state
+    const { isHeaderFixed, headerScrollPosition } = this.state
 
-    if (isMobile) {
+    if (isMobile || !this.newsNode) {
       return
     }
 
-    if (!this.menuRef || !this.menuRef.current || !this.newsNode) {
-      return
-    }
-
-    // @ts-ignore
-    const offsetTop = this.menuRef.current.getBoundingClientRect().top
-    // @ts-ignore
-    const newsOffsetY = this.newsNode.getBoundingClientRect().top
-
-    if (offsetTop < 0 && !isHeaderFixed) {
+    if (window.pageYOffset >= headerScrollPosition && !isHeaderFixed) {
       this.setState({ isHeaderFixed: true }, () => {
         // @ts-ignore
         this.newsNode.style.marginTop = `${menuHeight}px`
       })
     }
 
-    if (newsOffsetY >= menuHeight && isHeaderFixed) {
+    if (window.pageYOffset < headerScrollPosition && isHeaderFixed) {
       this.setState({ isHeaderFixed: false }, () => {
         // @ts-ignore
         this.newsNode.style.marginTop = '0'
@@ -197,15 +178,9 @@ export default class Menu extends React.PureComponent<any> {
     )
   }
 
-  handleMenuItemClick = (value: string) => {
-    const { isHeaderFixed } = this.state
-    const positions = this.getSectionsPositions()
-
-    let scrollPosition =
-      positions[value] + document.documentElement.scrollTop - menuHeight
-
-    // window.scroll(0, scrollPosition)
-
-    scrollToElement(`#${value}`)
+  handleMenuItemClick = (id: string) => {
+    scrollToElement(`#${id}`, {
+      offset: -menuHeight
+    })
   }
 }
