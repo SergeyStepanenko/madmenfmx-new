@@ -37,13 +37,13 @@ const items = [
     image: jamesImage,
     title: 'James McClearen',
     description: 'Head of R&D',
-    link: 'www.linkedin.com/in/jamesmcclearen/'
+    link: 'http://linkedin.com/in/jamesmcclearen'
   },
   {
     image: dimiImage,
     title: 'Dr. Dimitris Xydas',
     description: 'Software & Control Systems',
-    link: 'www.linkedin.com/in/dimitrisxydas/'
+    link: 'http://linkedin.com/in/dimitrisxydas/'
   }
 ]
 
