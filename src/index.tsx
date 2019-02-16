@@ -7,7 +7,6 @@ import 'normalize.css/normalize.css'
 import 'reset-css'
 
 import routes from './routes'
-import registerServiceWorker from './registerServiceWorker'
 import './index.css'
 
 ReactDOM.render(
@@ -16,5 +15,3 @@ ReactDOM.render(
   </ThemeProvider>,
   document.getElementById('root') as HTMLElement
 )
-
-registerServiceWorker()
