@@ -1,6 +1,8 @@
 import * as React from 'react'
+import { debounce } from 'lodash-es'
 import styled from 'src/styled-components'
 import * as S from 'src/styles'
+import ScreenService from 'src/services/ScreenService'
 
 import ArrowCarousel from 'src/assets/svgr/ArrowCarousel'
 
@@ -163,14 +165,38 @@ function Item({ image, title, description, link, index }: any) {
 }
 
 export default class Team extends React.Component<any> {
-  // const { isTablet } = this.props
-
   state = {
-    block: 0
+    block: 0,
+    blocksOnScreen: this.blocksOnScreen
   }
 
+  componentDidMount() {
+    this.listenResize()
+  }
+
+  listenResize() {
+    // @ts-ignore
+    ScreenService.onResize(this.onResize)
+  }
+
+  onResize = debounce(() => {
+    this.setState({
+      blocksOnScreen: this.blocksOnScreen
+    })
+  }, 20)
+
   get blocksOnScreen() {
-    return 4
+    const width = window.innerWidth
+
+    if (width > 1320) {
+      return 4
+    }
+
+    if (width <= 1320 && width > 1045) {
+      return 3
+    }
+
+    return 2
   }
 
   get blockWidth() {

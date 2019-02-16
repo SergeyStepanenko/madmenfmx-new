@@ -11,12 +11,11 @@ import Info from 'src/components/Info'
 import Misson from 'src/components/Mission'
 import Timeline from 'src/components/Timeline'
 import Team from 'src/components/Team'
+import Maps from 'src/components/Maps'
+import Partners from 'src/components/Partners'
 import TurnKeySolution from 'src/components/TurnKeySolution'
 import homeImage from 'src/assets/home.jpg'
 import logoMobile from 'src/assets/logo_icon.svg'
-
-import map1 from 'src/assets/map_1.jpg'
-import map2 from 'src/assets/map_2.jpg'
 
 const Wrapper: any = styled.div``
 
@@ -82,17 +81,6 @@ const MoreNewsButton = styled.button`
   outline: none;
 `
 
-const Maps = styled.section`
-  margin-top: 109px;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-`
-
-const Map: any = styled.img`
-  width: ${({ isTablet }: any) => (isTablet ? '100%' : '900px')};
-`
-
 const MobileLogoContainer = styled.div`
   text-align: center;
 `
@@ -139,15 +127,11 @@ export default class Main extends React.Component {
   }, 20)
 
   render() {
-    const {
-      isTablet,
-      isMobile
-      // isMobileSmall
-    } = this.state
+    const { isTablet, isMobile } = this.state
 
     return (
       <Wrapper>
-        <ImageContainer>
+        {/* <ImageContainer>
           <TitleContainer>
             {isTablet ? (
               <MobileLogoContainer>
@@ -171,17 +155,11 @@ export default class Main extends React.Component {
         </News>
         <Misson isTablet={isTablet} isMobile={isMobile} />
         <Info isTablet={isTablet} />
-        <Maps>
-          <picture>
-            <Map isTablet={isTablet} src={map1} alt="flugauto" />
-          </picture>
-          <picture>
-            <Map isTablet={isTablet} src={map2} alt="conventional way" />
-          </picture>
-        </Maps>
+        <Maps isMobile={isMobile} />
         <TurnKeySolution isTablet={isTablet} isMobile={isMobile} />
-        <Timeline isMobile={isMobile} />
+        <Timeline isMobile={isMobile} /> */}
         <Team isMobile={isMobile} />
+        {/* <Partners isMobile={isMobile} /> */}
       </Wrapper>
     )
   }
