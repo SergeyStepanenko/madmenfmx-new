@@ -36,6 +36,7 @@
     "react-swipeable": "^5.0.1",
     "reset-css": "^4.0.1",
     "resolve": "1.6.0",
+    "scroll-to-element": "^2.0.2",
     "source-map-loader": "^0.2.1",
     "style-loader": "0.19.0",
     "styled-components": "^4.0.2",

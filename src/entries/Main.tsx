@@ -85,11 +85,10 @@ export default class Main extends React.Component {
     isTitleFixed: false
   }
 
-  positions = []
+  menuItems = ['home', 'news', 'mission', 'timeline', 'team', 'partners']
 
   componentDidMount() {
     this.listenResize()
-    this.getSectionsPositions()
   }
 
   get isTablet() {
@@ -102,27 +101,6 @@ export default class Main extends React.Component {
 
   get isMobileSmall() {
     return window.innerWidth <= 454
-  }
-
-  getSectionsPositions() {
-    if (!this.wrapperRef || !this.wrapperRef.current) {
-      return
-    }
-
-    // @ts-ignore
-    const { children } = this.wrapperRef.current || []
-
-    children.reduce = [].reduce
-
-    this.positions = children.reduce(
-      (acc: any, item: any) => ({
-        ...acc,
-        [item.id]: item.getBoundingClientRect().top
-      }),
-      {}
-    )
-
-    console.log(this.positions)
   }
 
   listenResize() {
@@ -138,14 +116,13 @@ export default class Main extends React.Component {
   }, 20)
 
   wrapperRef = React.createRef()
-  newsRef = React.createRef()
 
   render() {
-    const { isTablet, isMobile, isTitleFixed } = this.state
+    const { isTablet, isMobile } = this.state
 
     return (
-      <Wrapper ref={this.wrapperRef}>
-        <ImageSection id="logo">
+      <Wrapper id="wrapper" ref={this.wrapperRef}>
+        <ImageSection id={this.menuItems[0]}>
           <TitleContainer>
             {isTablet ? (
               <MobileLogoContainer>
@@ -156,23 +133,23 @@ export default class Main extends React.Component {
             )}
           </TitleContainer>
         </ImageSection>
-        <Menu id="menu" isMobile={isMobile} />
-        <News id="news" ref={this.newsRef}>
+        <Menu isMobile={isMobile} menuItems={this.menuItems} />
+        <News id={this.menuItems[1]}>
           <NewsTitle>News</NewsTitle>
           <Carousel isTablet={isTablet} isMobile={isMobile} />
           <MoreNewsButton>More news</MoreNewsButton>
         </News>
-        <Misson id="mission" isTablet={isTablet} isMobile={isMobile} />
-        <Info id="info" isTablet={isTablet} />
-        <Maps id="maps" isMobile={isMobile} />
-        <TurnKeySolution
-          id="keySolution"
+        <Misson
+          id={this.menuItems[2]}
           isTablet={isTablet}
           isMobile={isMobile}
         />
-        <Timeline id="timeline" isMobile={isMobile} />
-        <Team id="team" isMobile={isMobile} />
-        <Partners id="partners" isMobile={isMobile} />
+        <Info isTablet={isTablet} />
+        <Maps isMobile={isMobile} />
+        <TurnKeySolution isTablet={isTablet} isMobile={isMobile} />
+        <Timeline id={this.menuItems[3]} isMobile={isMobile} />
+        <Team id={this.menuItems[4]} isMobile={isMobile} />
+        <Partners id={this.menuItems[5]} isMobile={isMobile} />
       </Wrapper>
     )
   }

@@ -51,7 +51,7 @@ const width = 250
 const padding = 16
 
 const TeamSection = styled.section`
-  margin-top: 76px;
+  padding-top: 76px;
   padding-right: 12px;
   padding-left: 12px;
   background-color: #f1f5f7;

@@ -4,9 +4,10 @@ import * as S from 'src/styles'
 import timelineImage from 'src/assets/timeline.svg'
 
 const TimelineSection = styled.section`
-  margin-top: 76px;
+  padding-top: 76px;
   padding-right: 12px;
   padding-left: 12px;
+  padding-bottom: 140px;
 `
 
 const TimelineTitle = styled(S.Title)``
