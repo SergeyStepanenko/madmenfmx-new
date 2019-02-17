@@ -67,7 +67,7 @@ const EmailIcon = styled.a`
   cursor: pointer;
 `
 
-const MenuBlock = styled.menu`
+const MenuBlock = styled.nav`
   display: flex;
   align-items: center;
 `
