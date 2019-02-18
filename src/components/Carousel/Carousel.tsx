@@ -83,32 +83,13 @@ const ArrowLeftButton: any = styled(S.Button)`
 export default class Carousel extends React.Component<any> {
   state = {
     slide: 1,
-    containerWidth: 0
+    containerWidth: 0,
+    items: []
   }
-
-  items = [
-    {
-      dateText: 'Jan 1, 2019',
-      titleText: 'Lorem ipsum dolor sit amet, consectetur adipisicing',
-      descriptionText:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna d exercitation ullamco laboris nisi ut aliquip ex'
-    },
-    {
-      dateText: 'Jan 2, 2019',
-      titleText: 'Lorem ipsum dolor sit amg',
-      descriptionText:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex'
-    },
-    {
-      dateText: 'Jan 3, 2019',
-      titleText: 'Lorem ipsum dolor sit amet, adipisicing',
-      descriptionText:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing eliostrud exercitation ullamco laboris nisi ut aliquip ex'
-    }
-  ]
 
   componentDidMount() {
     this.listenResize()
+    this.setItems()
     this.setContainerWidth()
   }
 
@@ -117,7 +98,9 @@ export default class Carousel extends React.Component<any> {
   }
 
   get rightArrowColor() {
-    return this.state.slide === this.items.length ? '#aaacad' : null
+    const { slide, items } = this.state
+
+    return slide === items.length ? '#aaacad' : null
   }
 
   get containerWidth() {
@@ -128,7 +111,9 @@ export default class Carousel extends React.Component<any> {
   }
 
   get listWidth() {
-    return this.items.length * this.state.containerWidth
+    const { items, containerWidth } = this.state
+
+    return items.length * containerWidth
   }
 
   get shift() {
@@ -142,6 +127,36 @@ export default class Carousel extends React.Component<any> {
     ScreenService.onResize(this.handleResize)
   }
 
+  setItems() {
+    const node = document.getElementById('blog')
+
+    if (!node || !node.children) {
+      return
+    }
+
+    const { children } = node
+
+    // @ts-ignore
+    children.map = [].map
+
+    // @ts-ignore
+    const items = children.map((child) => {
+      const dateNode = child.querySelector('.date')
+      const titleNode = child.querySelector('.title')
+      const descriptionNode = child.querySelector('.description')
+
+      return {
+        dateText: dateNode ? dateNode.innerText : null,
+        dateTime: dateNode ? dateNode.dateTime : null,
+        titleText: titleNode ? titleNode.innerText : null,
+        descriptionNode: descriptionNode || null,
+        isExtended: false
+      }
+    })
+
+    this.setState({ items })
+  }
+
   setContainerWidth() {
     this.setState({
       containerWidth: this.containerWidth
@@ -149,9 +164,9 @@ export default class Carousel extends React.Component<any> {
   }
 
   scrollToLeft() {
-    const { slide } = this.state
+    const { slide, items } = this.state
 
-    if (slide === this.items.length) {
+    if (slide === items.length) {
       return
     }
 
@@ -172,11 +187,22 @@ export default class Carousel extends React.Component<any> {
     }))
   }
 
+  collapseAllItems() {
+    const { items } = this.state
+
+    const updatedItems = items.map((item: any) => ({
+      ...item,
+      isExtended: false
+    }))
+
+    this.setState({ items: updatedItems })
+  }
+
   listWrapperRef = React.createRef()
 
   render() {
     const { isTablet, isMobile } = this.props
-    const { slide, containerWidth } = this.state
+    const { items, slide, containerWidth } = this.state
 
     return (
       <div>
@@ -193,13 +219,14 @@ export default class Carousel extends React.Component<any> {
           )}
           <ListWrapper isTablet={isTablet} ref={this.listWrapperRef}>
             <List width={this.listWidth} shift={this.shift}>
-              {this.items.map(({ dateText, titleText, descriptionText }) => (
+              {items.map((item: any, index) => (
                 <CarouselItem
-                  key={titleText}
-                  dateText={dateText}
-                  titleText={titleText}
-                  descriptionText={descriptionText}
+                  key={item.titleText}
+                  index={index}
+                  currentSlide={slide}
                   width={containerWidth}
+                  onReadMoreLessClick={this.handleReadMoreLessClick}
+                  {...item}
                 />
               ))}
             </List>
@@ -208,7 +235,7 @@ export default class Carousel extends React.Component<any> {
             <ArrowRightButton
               isTablet={isTablet}
               isMobile={isMobile}
-              isActive={slide < this.items.length}
+              isActive={slide < items.length}
               onClick={this.handleRightArrowClick}
             >
               <ArrowCarousel fill={this.rightArrowColor} />
@@ -217,7 +244,7 @@ export default class Carousel extends React.Component<any> {
         </Container>
         {isMobile && (
           <S.PointsContainer>
-            {this.items.map((value, index) => (
+            {items.map((value, index) => (
               <S.Point
                 key={index}
                 isActive={index + 1 === slide}
@@ -231,10 +258,12 @@ export default class Carousel extends React.Component<any> {
   }
 
   handleLeftArrowClick = () => {
+    this.collapseAllItems()
     this.scrollToRight()
   }
 
   handleRightArrowClick = () => {
+    this.collapseAllItems()
     this.scrollToLeft()
   }
 
@@ -244,5 +273,17 @@ export default class Carousel extends React.Component<any> {
 
   handlePointClick = (index: any) => {
     this.setState({ slide: index + 1 })
+  }
+
+  handleReadMoreLessClick = (index: number, isExtended: boolean) => {
+    const { items } = this.state
+
+    const updatedItems = [...items]
+    // @ts-ignore
+    updatedItems[index].isExtended = !isExtended
+
+    this.setState({
+      items: updatedItems
+    })
   }
 }
