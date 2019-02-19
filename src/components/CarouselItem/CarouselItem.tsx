@@ -1,17 +1,18 @@
 import * as React from 'react'
-import styled from 'src/styled-components'
+import styled, { css } from 'src/styled-components'
 
 import ArrowSmall from 'src/assets/svgr/ArrowSmall'
 
 const height = 266
 
 const Item: any = styled.div`
-  width: ${(props: any) => props.width}px;
+  display: inline-block;
+  width: ${(props: any) => props.nodeWidth}px;
   min-height: ${height}px;
-  height: ${(props: any) => (props.isVisible ? 'auto' : '0px')};
   padding: 41px 35px;
   box-sizing: border-box;
   overflow: hidden;
+  visibility: ${(props: any) => (props.isLoaded ? 'visible' : 'hidden')};
 `
 
 const Date: any = styled.time`
@@ -31,7 +32,7 @@ const Description: any = styled.div`
   font-size: 14px;
   font-family: Open Sans;
   line-height: 24px;
-  height: ${(props: any) => (props.isExtended ? 'auto' : '90px')};
+  height: ${(props: any) => props.nodeHeight};
   overflow: hidden;
   transition: height 0.3s ease-in-out;
 
@@ -46,7 +47,7 @@ const Header = styled.header``
 
 const ReadMoreText = styled.span``
 
-const ReadMoreButton = styled.button`
+const ReadMoreButton: any = styled.button`
   display: flex;
   align-items: center;
   margin-top: 20px;
@@ -65,18 +66,46 @@ const ReadMoreButton = styled.button`
     position: relative;
     top: -1px;
     left: 4px;
+
+    ${(props: any) =>
+      props.isExtended &&
+      css`
+        transform: rotate(180deg);
+      `}
   }
 `
 
 export default class CarouselItem extends React.Component<any> {
+  descriptionHeight = null
+  collapedHeight = 90
+
   componentDidMount() {
     this.appendNode()
+    this.setHeight()
   }
 
   get isVisible() {
     const { index, currentSlide } = this.props
 
     return index + 1 === currentSlide
+  }
+
+  get isLoaded() {
+    return Boolean(this.descriptionHeight)
+  }
+
+  get dynamicItemHeight() {
+    const { isExtended } = this.props
+
+    if (!isExtended) {
+      return '90px'
+    }
+
+    if (this.descriptionHeight) {
+      return `${this.descriptionHeight}px`
+    }
+
+    return 'auto'
   }
 
   appendNode() {
@@ -90,7 +119,19 @@ export default class CarouselItem extends React.Component<any> {
     this.descriptionRef.current.appendChild(descriptionNode)
   }
 
+  setHeight() {
+    const { index, onItemUpdate } = this.props
+
+    setTimeout(() => {
+      // @ts-ignore
+      this.descriptionHeight = this.descriptionRef.current.clientHeight
+      onItemUpdate(index, false)
+    }, 1000)
+  }
+
   descriptionRef = React.createRef()
+  itemRef = React.createRef()
+  buttonWrapperRef = React.createRef()
 
   render() {
     const {
@@ -103,14 +144,19 @@ export default class CarouselItem extends React.Component<any> {
     } = this.props
 
     return (
-      <Item width={width} isVisible={this.isVisible}>
+      <Item ref={this.itemRef} nodeWidth={width} isLoaded={this.isLoaded}>
         <Header>
           <Date dateTime={dateTime}>{dateText}</Date>
           <Title>{titleText}</Title>
         </Header>
-        <Description ref={this.descriptionRef} isExtended={isExtended} />
+        <Description
+          ref={this.descriptionRef}
+          nodeHeight={this.dynamicItemHeight}
+          isExtended={isExtended}
+        />
         <ReadMoreButton
           onClick={() => this.handleToggleReadMoreClick(index, isExtended)}
+          isExtended={isExtended}
         >
           <ReadMoreText>{isExtended ? 'Read less' : 'Read more'}</ReadMoreText>
           <ArrowSmall />
@@ -120,8 +166,8 @@ export default class CarouselItem extends React.Component<any> {
   }
 
   handleToggleReadMoreClick = (index: number, isExtended: boolean) => {
-    const { onReadMoreLessClick } = this.props
+    const { onItemUpdate } = this.props
 
-    onReadMoreLessClick(index, isExtended)
+    onItemUpdate(index, !isExtended)
   }
 }

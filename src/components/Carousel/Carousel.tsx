@@ -17,7 +17,6 @@ const Container: any = styled.div`
 
 const List: any = styled.div`
   width: ${(props: any) => props.width}px;
-  display: flex;
   background-color: #fff;
   transform: ${(props: any) => `translateX(${props.shift}px)`};
   transition: transform 0.3s ease-in-out;
@@ -150,7 +149,8 @@ export default class Carousel extends React.Component<any> {
         dateTime: dateNode ? dateNode.dateTime : null,
         titleText: titleNode ? titleNode.innerText : null,
         descriptionNode: descriptionNode || null,
-        isExtended: false
+        isExtended: true,
+        height: null
       }
     })
 
@@ -170,6 +170,8 @@ export default class Carousel extends React.Component<any> {
       return
     }
 
+    this.collapseAllItems()
+
     this.setState((prevState: any) => ({
       slide: prevState.slide + 1
     }))
@@ -181,6 +183,8 @@ export default class Carousel extends React.Component<any> {
     if (slide === 1) {
       return
     }
+
+    this.collapseAllItems()
 
     this.setState((prevState: any) => ({
       slide: prevState.slide - 1
@@ -225,7 +229,7 @@ export default class Carousel extends React.Component<any> {
                   index={index}
                   currentSlide={slide}
                   width={containerWidth}
-                  onReadMoreLessClick={this.handleReadMoreLessClick}
+                  onItemUpdate={this.handleItemUpdate}
                   {...item}
                 />
               ))}
@@ -258,12 +262,10 @@ export default class Carousel extends React.Component<any> {
   }
 
   handleLeftArrowClick = () => {
-    this.collapseAllItems()
     this.scrollToRight()
   }
 
   handleRightArrowClick = () => {
-    this.collapseAllItems()
     this.scrollToLeft()
   }
 
@@ -275,12 +277,12 @@ export default class Carousel extends React.Component<any> {
     this.setState({ slide: index + 1 })
   }
 
-  handleReadMoreLessClick = (index: number, isExtended: boolean) => {
+  handleItemUpdate = (index: number, isExtended: boolean) => {
     const { items } = this.state
 
     const updatedItems = [...items]
     // @ts-ignore
-    updatedItems[index].isExtended = !isExtended
+    updatedItems[index].isExtended = isExtended
 
     this.setState({
       items: updatedItems
