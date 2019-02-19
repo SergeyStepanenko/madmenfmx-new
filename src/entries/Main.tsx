@@ -5,6 +5,7 @@ import styled from 'src/styled-components'
 import ScreenService from 'src/services/ScreenService'
 import Logo from 'src/assets/svgr/Logo'
 import Menu from 'src/components/Menu'
+import Blog from 'src/components/Blog'
 import Carousel from 'src/components/Carousel'
 import Info from 'src/components/Info'
 import Misson from 'src/components/Mission'
@@ -80,6 +81,7 @@ export default class Main extends React.Component {
   state = {
     isTablet: this.isTablet,
     isMobile: this.isMobile,
+    isMoreNews: true,
     isTitleFixed: false
   }
 
@@ -102,6 +104,18 @@ export default class Main extends React.Component {
     ScreenService.onResize(this.onResize)
   }
 
+  renderMenu({ isStatic }: any) {
+    const { isMobile } = this.state
+
+    return (
+      <Menu
+        isMobile={isMobile}
+        menuItems={this.menuItems}
+        isStatic={isStatic}
+      />
+    )
+  }
+
   onResize = debounce(() => {
     this.setState({
       isTablet: this.isTablet,
@@ -112,7 +126,16 @@ export default class Main extends React.Component {
   wrapperRef = React.createRef()
 
   render() {
-    const { isTablet, isMobile } = this.state
+    const { isTablet, isMobile, isMoreNews } = this.state
+
+    if (isMoreNews) {
+      return (
+        <Blog
+          isMobile={isMobile}
+          renderMenu={() => this.renderMenu({ isStatic: true })}
+        />
+      )
+    }
 
     return (
       <Wrapper ref={this.wrapperRef}>
@@ -127,11 +150,13 @@ export default class Main extends React.Component {
             )}
           </TitleContainer>
         </ImageSection>
-        <Menu isMobile={isMobile} menuItems={this.menuItems} />
+        {this.renderMenu({ isStatic: false })}
         <News id={this.menuItems[1]}>
           <NewsTitle>News</NewsTitle>
           <Carousel isTablet={isTablet} isMobile={isMobile} />
-          <MoreNewsButton>More news</MoreNewsButton>
+          <MoreNewsButton onClick={this.handleMoreNewsClick}>
+            More news
+          </MoreNewsButton>
         </News>
         <Misson
           id={this.menuItems[2]}
@@ -146,5 +171,9 @@ export default class Main extends React.Component {
         <Partners id={this.menuItems[5]} isMobile={isMobile} />
       </Wrapper>
     )
+  }
+
+  handleMoreNewsClick = () => {
+    this.setState({ isMoreNews: true })
   }
 }

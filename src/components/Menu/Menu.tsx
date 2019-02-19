@@ -103,10 +103,22 @@ export default class Menu extends React.PureComponent<any> {
   }, 20)
 
   listenScroll() {
+    const { isStatic } = this.props
+
+    if (isStatic) {
+      return
+    }
+
     window.addEventListener('scroll', this.onScroll)
   }
 
   unlistedScroll() {
+    const { isStatic } = this.props
+
+    if (isStatic) {
+      return
+    }
+
     window.removeEventListener('scroll', this.onScroll)
   }
 
