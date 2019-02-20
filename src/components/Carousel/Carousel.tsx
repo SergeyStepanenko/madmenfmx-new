@@ -1,4 +1,6 @@
 import * as React from 'react'
+// @ts-ignore
+import { Swipeable } from 'react-swipeable'
 import styled, { css } from 'src/styled-components'
 import CarouselItem from 'src/components/CarouselItem'
 import ArrowCarousel from 'src/assets/svgr/ArrowCarousel'
@@ -223,18 +225,24 @@ export default class Carousel extends React.Component<any> {
             </ArrowLeftButton>
           )}
           <ListWrapper isTablet={isTablet} ref={this.listWrapperRef}>
-            <List width={this.listWidth} shift={this.shift}>
-              {items.map((item: any, index) => (
-                <CarouselItem
-                  key={item.titleText}
-                  index={index}
-                  currentSlide={slide}
-                  width={containerWidth}
-                  onItemUpdate={this.handleItemUpdate}
-                  {...item}
-                />
-              ))}
-            </List>
+            <Swipeable
+              onSwipedLeft={this.handleSwipeLeft}
+              onSwipedRight={this.handleSwipeRight}
+              preventDefaultTouchmoveEvent
+            >
+              <List width={this.listWidth} shift={this.shift}>
+                {items.map((item: any, index) => (
+                  <CarouselItem
+                    key={item.titleText}
+                    index={index}
+                    currentSlide={slide}
+                    width={containerWidth}
+                    onItemUpdate={this.handleItemUpdate}
+                    {...item}
+                  />
+                ))}
+              </List>
+            </Swipeable>
           </ListWrapper>
           {!isMobile && (
             <ArrowRightButton
@@ -288,5 +296,13 @@ export default class Carousel extends React.Component<any> {
     this.setState({
       items: updatedItems
     })
+  }
+
+  handleSwipeLeft = () => {
+    this.scrollToLeft()
+  }
+
+  handleSwipeRight = () => {
+    this.scrollToRight()
   }
 }

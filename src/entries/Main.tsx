@@ -45,6 +45,10 @@ const News: any = styled.section`
   padding-bottom: 65px;
   padding-left: 12px;
   background-color: #f2f6f7;
+
+  @media (max-width: 990px) {
+    padding-top: 42px;
+  }
 `
 
 const NewsTitle = styled.h5`
@@ -163,7 +167,11 @@ export default class Main extends React.Component {
         <Info isTablet={isTablet} />
         <Maps isMobile={isMobile} />
         <TurnKeySolution isTablet={isTablet} isMobile={isMobile} />
-        <Timeline id={this.menuItems[3]} isMobile={isMobile} />
+        <Timeline
+          id={this.menuItems[3]}
+          isTablet={isTablet}
+          isMobile={isMobile}
+        />
         <Team id={this.menuItems[4]} isMobile={isMobile} />
         <Partners id={this.menuItems[5]} isMobile={isMobile} />
       </Wrapper>

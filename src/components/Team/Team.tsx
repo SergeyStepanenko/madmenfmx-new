@@ -58,8 +58,8 @@ const TeamSection = styled.section`
   padding-top: 70px;
   padding-bottom: 92px;
 
-  @media (max-width: 768px) {
-    padding-top: 53px;
+  @media (max-width: 990px) {
+    padding-top: 42px;
   }
 `
 

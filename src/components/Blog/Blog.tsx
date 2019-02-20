@@ -38,7 +38,7 @@ const List: any = styled.div`
   }
 
   h2 {
-    margin-top: 16px;
+    margin-top: 10px;
   }
 
   #container {

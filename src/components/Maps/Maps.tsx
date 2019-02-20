@@ -7,22 +7,42 @@ const MapsSection = styled.section`
   margin-top: 109px;
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
+
+  @media (max-width: 990px) {
+    margin-top: 40px;
+    flex-flow: column;
+    align-items: center;
+  }
 `
 
 const Map: any = styled.img`
-  width: ${({ isTablet }: any) => (isTablet ? '100%' : '900px')};
+  width: 100%;
+`
+
+const Wrapper = styled.div`
+  width: 50%;
+
+  @media (max-width: 990px) {
+    width: 100%;
+    padding-left: 38px;
+    padding-right: 38px;
+  }
+
+  @media (max-width: 768px) {
+    padding-left: 0;
+    padding-right: 0;
+  }
 `
 
 export default function Maps({ isTablet, id }: any) {
   return (
     <MapsSection id={id}>
-      <picture>
+      <Wrapper>
         <Map isTablet={isTablet} src={map1} alt="flugauto" />
-      </picture>
-      <picture>
+      </Wrapper>
+      <Wrapper>
         <Map isTablet={isTablet} src={map2} alt="conventional way" />
-      </picture>
+      </Wrapper>
     </MapsSection>
   )
 }

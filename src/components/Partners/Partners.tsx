@@ -11,6 +11,10 @@ const PartnersSection = styled.section`
   background-color: #fff;
   padding-top: 80px;
   padding-bottom: 100px;
+
+  @media (max-width: 990px) {
+    padding-top: 42px;
+  }
 `
 
 const Image = styled.img``

@@ -6,14 +6,20 @@ import * as S from 'src/styles'
 
 const Helicopter: any = styled.div`
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   margin-left: auto;
   margin-right: auto;
   padding-left: 42px;
   padding-right: 42px;
 
-  ${(props: any) => props.isTablet && css``}
+  @media (max-width: 990px) {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  @media (max-width: 760px) {
+    flex-flow: column;
+  }
 `
 
 const InfoSection = styled.section`
@@ -22,11 +28,29 @@ const InfoSection = styled.section`
   padding-top: 146px;
   padding-right: 12px;
   padding-left: 12px;
+
+  @media (max-width: 990px) {
+    padding-top: 42px;
+    padding-bottom: 42px;
+  }
+
+  @media (max-width: 760px) {
+    padding-right: 0;
+    padding-left: 0;
+  }
 `
 
 const HeliDescripionBlock: any = styled.div`
-  max-width: 380px;
   padding-right: ${(props: any) => (props.isTablet ? '20' : '50')}px;
+
+  @media (max-width: 980px) {
+    max-width: 300px;
+  }
+
+  @media (max-width: 760px) {
+    max-width: 100%;
+    padding-right: 0;
+  }
 `
 
 const HeliChartBlock: any = styled.div`
@@ -36,15 +60,25 @@ const HeliChartBlock: any = styled.div`
       margin-top: 80px;
     `}
 
-  width: ${(props: any) => (props.isTablet ? '480px' : '50%')};
+  min-width: 380px;
   height: 350px;
   background-image: url(${benefitsImage});
   background-repeat: no-repeat;
+  margin-top: 120px;
+
+  @media (max-width: 760px) {
+    margin-top: 40px;
+    min-width: 100%;
+  }
 `
 
 const HeliTitle: any = styled(S.UnderlinedText)`
   color: #000;
   font-size: 35px;
+
+  @media (max-width: 760px) {
+    white-space: initial;
+  }
 
   ${(props: any) =>
     props.isTablet &&
@@ -63,25 +97,54 @@ const DeliveryComparisonBlock = styled.div`
   display: flex;
   width: 60%;
 
+  @media (max-width: 990px) {
+    width: 95%;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    flex-flow: column;
+    align-items: center;
+
+    > div {
+      width: 100%;
+      border-radius: 0;
+    }
+  }
+
   > div:first-of-type {
     z-index: 1;
   }
 
-  > div:last-of-type {
-    transform: translate(-30px, 30px);
+  @media (min-width: 769px) {
+    > div:last-of-type {
+      transform: translate(-30px, 30px);
+    }
   }
 `
 
 const Delivery = styled.div`
   display: flex;
-  margin-top: 131px;
+
+  @media (max-width: 990px) {
+    margin-top: 60px;
+    flex-flow: column;
+    align-items: center;
+  }
 `
 
 const DeliveryDescBlock = styled.div`
+  width: 40%;
   margin-top: 130px;
   margin-left: 50px;
-  width: 40%;
-  padding-right: 50px;
+  margin-right: 50px;
+
+  @media (max-width: 990px) {
+    margin-top: 42px;
+    width: 100%;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
 `
 
 export default function Info(props: any) {

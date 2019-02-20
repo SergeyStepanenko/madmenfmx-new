@@ -20,6 +20,17 @@ const DeliveryItem: any = styled.div`
   padding-right: 34px;
   padding-bottom: 30px;
   padding-left: ${(props: any) => (props.isAltered ? 65 : 34)}px;
+
+  @media (max-width: 768px) {
+    padding-left: 34px;
+    min-height: auto;
+    padding-bottom: 45px;
+  }
+
+  @media (max-width: 990px) {
+    width: ${(props: any) => (props.isAltered ? 447 : 426)}px;
+  }
+
   background-color: ${(props: any) =>
     props.isAltered ? '#f1f5f7' : props.theme.colors.main};
   border-radius: 6px;
@@ -35,6 +46,11 @@ const DeliveryImage: any = styled.img`
 
 const DeliveryTitle: any = styled.p`
   margin-top: ${(props: any) => (props.isAltered ? 40 : 30)}px;
+
+  @media (max-width: 768px) {
+    margin-top: 30px;
+  }
+
   font-size: 18px;
   font-family: Avenir Next Bold;
   text-align: center;

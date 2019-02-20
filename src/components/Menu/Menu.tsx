@@ -145,9 +145,9 @@ export default class Menu extends React.PureComponent<any> {
     ScreenService.onResize(this.onResize)
   }
 
-  onResize = debounce(() => {
-    this.setHeaderScrollPosition()
-  }, 20)
+  onResize = () => {
+    // this.setHeaderScrollPosition()
+  }
 
   listenScroll() {
     const { isStatic } = this.props

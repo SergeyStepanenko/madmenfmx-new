@@ -13,6 +13,12 @@ const MissionSection = styled.section`
   background-size: cover;
   background-position-x: center;
   background-repeat: no-repeat;
+
+  @media (max-width: 990px) {
+    min-height: auto;
+    padding-top: 42px;
+    padding-bottom: 42px;
+  }
 `
 
 const MissionTitle = styled.h3`

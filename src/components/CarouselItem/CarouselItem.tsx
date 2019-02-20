@@ -1,4 +1,5 @@
 import * as React from 'react'
+import ScreenService from 'src/services/ScreenService'
 import styled, { css } from 'src/styled-components'
 
 import ArrowSmall from 'src/assets/svgr/ArrowSmall'
@@ -119,7 +120,7 @@ export default class CarouselItem extends React.Component<any> {
     this.descriptionRef.current.appendChild(descriptionNode)
   }
 
-  setHeight() {
+  setHeight = () => {
     const { index, onItemUpdate } = this.props
 
     setTimeout(() => {

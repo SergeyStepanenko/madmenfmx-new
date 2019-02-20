@@ -5,6 +5,14 @@ export const UnderlinedText = styled.p`
   border-bottom: 4px solid #00a8f3;
   line-height: 56px;
   font-family: Avenir Next Bold;
+
+  @media (max-width: 990px) {
+    display: block;
+    text-decoration: underline;
+    text-decoration-color: #00a8f3;
+    border-bottom: none;
+    text-align: center;
+  }
 `
 
 export const Title = styled.h3`

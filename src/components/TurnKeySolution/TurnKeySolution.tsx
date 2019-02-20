@@ -12,6 +12,10 @@ const TurnKeySolutionWrapper: any = styled.section`
   margin-top: ${({ isTablet }: any) => (isTablet ? 168 : 63)}px;
   margin-left: auto;
   margin-right: auto;
+
+  @media (max-width: 990px) {
+    margin-top: 42px;
+  }
 `
 
 const Title: any = styled(S.UnderlinedText)`
@@ -35,6 +39,11 @@ const Text = styled.p`
   font-family: Open Sans;
   max-width: 700px;
   line-height: 31px;
+
+  @media (max-width: 990px) {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
 `
 
 const List = styled.div`
