@@ -86,6 +86,7 @@ export default class Main extends React.Component {
   }
 
   menuItems = ['home', 'news', 'mission', 'timeline', 'team', 'partners']
+  scroll = 0
 
   componentDidMount() {
     this.listenResize()
@@ -105,10 +106,11 @@ export default class Main extends React.Component {
   }
 
   renderMenu({ isStatic }: any) {
-    const { isMobile } = this.state
+    const { isMobile, isTablet } = this.state
 
     return (
       <Menu
+        isTablet={isTablet}
         isMobile={isMobile}
         menuItems={this.menuItems}
         isStatic={isStatic}
@@ -129,12 +131,7 @@ export default class Main extends React.Component {
     const { isTablet, isMobile, isMoreNews } = this.state
 
     if (isMoreNews) {
-      return (
-        <Blog
-          isMobile={isMobile}
-          renderMenu={() => this.renderMenu({ isStatic: true })}
-        />
-      )
+      return <Blog isMobile={isMobile} onCloseClick={this.handleCloseClick} />
     }
 
     return (
@@ -174,6 +171,15 @@ export default class Main extends React.Component {
   }
 
   handleMoreNewsClick = () => {
-    this.setState({ isMoreNews: true })
+    this.scroll = window.pageYOffset
+    this.setState({ isMoreNews: true }, () => {
+      window.scroll(0, 0)
+    })
+  }
+
+  handleCloseClick = () => {
+    this.setState({ isMoreNews: false }, () => {
+      window.scroll(0, 0)
+    })
   }
 }

@@ -127,7 +127,7 @@ export default class Carousel extends React.Component<any> {
   }
 
   setItems() {
-    const node = document.getElementById('blog')
+    const node = document.getElementById('container')
 
     if (!node || !node.children) {
       return
@@ -140,9 +140,11 @@ export default class Carousel extends React.Component<any> {
 
     // @ts-ignore
     const items = children.map((child) => {
-      const dateNode = child.querySelector('.date')
-      const titleNode = child.querySelector('.title')
-      const descriptionNode = child.querySelector('.description')
+      const dateNode = child.querySelector('.date').cloneNode(true)
+      const titleNode = child.querySelector('.title').cloneNode(true)
+      const descriptionNode = child
+        .querySelector('.description')
+        .cloneNode(true)
 
       return {
         dateText: dateNode ? dateNode.innerText : null,

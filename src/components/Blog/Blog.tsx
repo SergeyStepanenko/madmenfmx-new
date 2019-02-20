@@ -1,11 +1,13 @@
 import * as React from 'react'
 import styled from 'src/styled-components'
+import closeImage from 'src/assets/menu_close.svg'
 import * as S from 'src/styles'
 
 const Title = styled(S.Title)``
 
 const Container: any = styled.div`
   background-color: #f2f7f8;
+  padding-top: 32px;
   padding-bottom: 32px;
 
   #blog {
@@ -15,16 +17,16 @@ const Container: any = styled.div`
 
 const List: any = styled.div`
   max-width: 800px;
-
   margin-left: auto;
   margin-right: auto;
 
   ${Title} {
-    margin-top: 32px;
     margin-bottom: 24px;
   }
 
   article {
+    margin-left: 16px;
+    margin-right: 16px;
     padding: 24px;
     background-color: #fff;
     border-radius: 6px;
@@ -39,11 +41,17 @@ const List: any = styled.div`
     margin-top: 16px;
   }
 
-  #blog {
+  #container {
     & > * + * {
       margin-top: 30px;
     }
   }
+`
+
+const CloseButton = styled.img`
+  position: fixed;
+  top: 24px;
+  right: 24px;
 `
 
 export default class Blog extends React.Component<any> {
@@ -55,7 +63,7 @@ export default class Blog extends React.Component<any> {
 
   appendBlogNode() {
     // @ts-ignore
-    this.blogNode = document.getElementById('blog')
+    this.blogNode = document.getElementById('blog').cloneNode(true)
     // @ts-ignore
     this.listRef.current.appendChild(this.blogNode)
   }
@@ -63,11 +71,16 @@ export default class Blog extends React.Component<any> {
   listRef = React.createRef()
 
   render() {
-    const { renderMenu } = this.props
+    const { onCloseClick } = this.props
 
     return (
       <Container>
-        {renderMenu()}
+        <CloseButton
+          src={closeImage}
+          width="24px"
+          alt="close"
+          onClick={onCloseClick}
+        />
         <List ref={this.listRef}>
           <Title>News</Title>
         </List>

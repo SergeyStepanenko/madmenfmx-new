@@ -54,17 +54,22 @@ const Item: any = styled.li`
   text-transform: capitalize;
 `
 
-const EmailIcon = styled.a`
+const EmailIcon: any = styled.a`
   display: block;
   margin-left: 30px;
   width: 84px;
   height: 100%;
-  border-left: 2px solid #e5ecef;
   background-image: url(${emailIcon});
   background-size: 20px;
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
+
+  ${({ isTablet }: any) =>
+    !isTablet &&
+    css`
+      border-left: 2px solid #e5ecef;
+    `}
 `
 
 const MenuBlock = styled.nav`
@@ -169,7 +174,7 @@ export default class Menu extends React.PureComponent<any> {
     return (
       <MenuSection id={id} ref={this.menuRef} isHeaderFixed={isHeaderFixed}>
         <LogoContainer>
-          <Logo width="233px" fill="#052554" />
+          <Logo width={isTablet ? '150px' : '233px'} fill="#052554" />
         </LogoContainer>
         <MenuBlock>
           {!isTablet && (
@@ -184,7 +189,7 @@ export default class Menu extends React.PureComponent<any> {
               ))}
             </List>
           )}
-          <EmailIcon href="mailto:info@flug-auto.com" />
+          <EmailIcon href="mailto:info@flug-auto.com" isTablet={isTablet} />
         </MenuBlock>
       </MenuSection>
     )
