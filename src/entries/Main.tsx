@@ -81,7 +81,7 @@ export default class Main extends React.Component {
   state = {
     isTablet: this.isTablet,
     isMobile: this.isMobile,
-    isMoreNews: true,
+    isBlog: false,
     isTitleFixed: false
   }
 
@@ -128,9 +128,9 @@ export default class Main extends React.Component {
   wrapperRef = React.createRef()
 
   render() {
-    const { isTablet, isMobile, isMoreNews } = this.state
+    const { isTablet, isMobile, isBlog } = this.state
 
-    if (isMoreNews) {
+    if (isBlog) {
       return <Blog isMobile={isMobile} onCloseClick={this.handleCloseClick} />
     }
 
@@ -172,13 +172,13 @@ export default class Main extends React.Component {
 
   handleMoreNewsClick = () => {
     this.scroll = window.pageYOffset
-    this.setState({ isMoreNews: true }, () => {
+    this.setState({ isBlog: true }, () => {
       window.scroll(0, 0)
     })
   }
 
   handleCloseClick = () => {
-    this.setState({ isMoreNews: false }, () => {
+    this.setState({ isBlog: false }, () => {
       window.scroll(0, 0)
     })
   }

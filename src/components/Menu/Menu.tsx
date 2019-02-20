@@ -5,12 +5,15 @@ import scrollToElement from 'scroll-to-element'
 
 import styled, { css } from 'src/styled-components'
 import emailIcon from 'src/assets/email.svg'
+import closeImage from 'src/assets/menu_close.svg'
+import burgerImage from 'src/assets/menu.svg'
 import Logo from 'src/assets/svgr/Logo'
 import ScreenService from 'src/services/ScreenService'
 
 const menuHeight = 76
 
 const MenuSection: any = styled.section`
+  position: relative;
   height: ${menuHeight}px;
   display: flex;
   justify-content: space-between;
@@ -24,6 +27,12 @@ const MenuSection: any = styled.section`
       left: 0;
       right: 0;
       z-index: 10;
+    `}
+
+  ${(props: any) =>
+    props.isOpened &&
+    css`
+      border-bottom: 1px solid #e3eeef;
     `}
 `
 
@@ -56,7 +65,7 @@ const Item: any = styled.li`
 
 const EmailIcon: any = styled.a`
   display: block;
-  margin-left: 30px;
+  margin-left: ${({ isTablet }: any) => (isTablet ? 5 : 30)}px;
   width: 84px;
   height: 100%;
   background-image: url(${emailIcon});
@@ -77,10 +86,43 @@ const MenuBlock = styled.nav`
   align-items: center;
 `
 
+const MenuButton = styled.img`
+  width: 19px;
+  cursor: pointer;
+`
+
+const CloseButton = styled(MenuButton)``
+
+const OpenButton = styled(MenuButton)``
+
+const MobileList = styled.ul`
+  position: absolute;
+  padding: 0;
+  list-style: none;
+  top: ${menuHeight}px;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  z-index: 1;
+
+  ${Item} {
+    text-align: left;
+    margin-left: 46px;
+    width: 100%;
+    line-height: 60px;
+    border-bottom: 1px solid #eeeff1;
+  }
+
+  ${Item}:last-of-type {
+    border-bottom: none;
+  }
+`
+
 export default class Menu extends React.PureComponent<any> {
   state = {
     isHeaderFixed: false,
-    headerScrollPosition: 0
+    headerScrollPosition: 0,
+    isOpened: false
   }
 
   node = null
@@ -145,10 +187,9 @@ export default class Menu extends React.PureComponent<any> {
   }
 
   onScroll = () => {
-    const { isMobile } = this.props
     const { isHeaderFixed, headerScrollPosition } = this.state
 
-    if (isMobile || !this.newsNode) {
+    if (!this.newsNode) {
       return
     }
 
@@ -167,28 +208,47 @@ export default class Menu extends React.PureComponent<any> {
     }
   }
 
+  renderMenuItems() {
+    const { menuItems } = this.props
+
+    return menuItems.map((value: string) => (
+      <Item key={value} onClick={() => this.handleMenuItemClick(value)}>
+        {value}
+      </Item>
+    ))
+  }
+
   render() {
-    const { id, menuItems, isTablet } = this.props
-    const { isHeaderFixed } = this.state
+    const { id, isTablet } = this.props
+    const { isHeaderFixed, isOpened } = this.state
 
     return (
-      <MenuSection id={id} ref={this.menuRef} isHeaderFixed={isHeaderFixed}>
+      <MenuSection
+        id={id}
+        ref={this.menuRef}
+        isOpened={isOpened}
+        isHeaderFixed={isHeaderFixed}
+      >
         <LogoContainer>
           <Logo width={isTablet ? '150px' : '233px'} fill="#052554" />
         </LogoContainer>
         <MenuBlock>
-          {!isTablet && (
-            <List>
-              {menuItems.map((value: string) => (
-                <Item
-                  key={value}
-                  onClick={() => this.handleMenuItemClick(value)}
-                >
-                  {value}
-                </Item>
-              ))}
-            </List>
-          )}
+          {!isTablet && <List>{this.renderMenuItems()}</List>}
+          {isTablet &&
+            (isOpened ? (
+              <CloseButton
+                src={closeImage}
+                onClick={this.handleCloseMenuClick}
+              />
+            ) : (
+              <OpenButton
+                src={burgerImage}
+                onClick={this.handleOpenMenuClick}
+              />
+            ))}
+          {isTablet && isOpened ? (
+            <MobileList>{this.renderMenuItems()}</MobileList>
+          ) : null}
           <EmailIcon href="mailto:info@flug-auto.com" isTablet={isTablet} />
         </MenuBlock>
       </MenuSection>
@@ -196,8 +256,22 @@ export default class Menu extends React.PureComponent<any> {
   }
 
   handleMenuItemClick = (id: string) => {
+    const { isOpened } = this.state
+
+    if (isOpened) {
+      this.setState({ isOpened: false })
+    }
+
     scrollToElement(`#${id}`, {
       offset: -menuHeight
     })
+  }
+
+  handleCloseMenuClick = () => {
+    this.setState({ isOpened: false })
+  }
+
+  handleOpenMenuClick = () => {
+    this.setState({ isOpened: true })
   }
 }

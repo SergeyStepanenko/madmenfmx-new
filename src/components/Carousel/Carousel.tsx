@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { debounce } from 'lodash-es'
 import styled, { css } from 'src/styled-components'
 import CarouselItem from 'src/components/CarouselItem'
 import ArrowCarousel from 'src/assets/svgr/ArrowCarousel'
@@ -271,9 +270,9 @@ export default class Carousel extends React.Component<any> {
     this.scrollToLeft()
   }
 
-  handleResize = debounce(() => {
+  handleResize = () => {
     this.setContainerWidth()
-  }, 50)
+  }
 
   handlePointClick = (index: any) => {
     this.setState({ slide: index + 1 })
