@@ -1,8 +1,8 @@
 {
   "main.css": "static/css/main.6df005fc.css",
   "main.css.map": "static/css/main.6df005fc.css.map",
-  "main.js": "static/js/main.513c5e8a.js",
-  "main.js.map": "static/js/main.513c5e8a.js.map",
+  "main.js": "static/js/main.c7c87c8a.js",
+  "main.js.map": "static/js/main.c7c87c8a.js.map",
   "static/media/benefits.svg": "static/media/benefits.000988bb.svg",
   "static/media/email.svg": "static/media/email.3982f0c7.svg",
   "static/media/flugauto_icon.svg": "static/media/flugauto_icon.c77ac7b4.svg",
@@ -26,5 +26,6 @@
   "static/media/team_james.png": "static/media/team_james.8d265860.png",
   "static/media/tech.svg": "static/media/tech.86383c34.svg",
   "static/media/timeline.svg": "static/media/timeline.f2cb8ca4.svg",
+  "static/media/timeline_mobile.svg": "static/media/timeline_mobile.7f0a8462.svg",
   "static/media/truck_icon.svg": "static/media/truck_icon.da2eafcd.svg"
 }
