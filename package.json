@@ -120,7 +120,7 @@
     ],
     "globals": {
       "ts-jest": {
-        "tsConfigFile": "/Users/s.stepanenko/work/pp/madmenfmx-new/tsconfig.test.json"
+        "tsConfigFile": "./tsconfig.test.json"
       }
     }
   },
@@ -129,5 +129,5 @@
       "react-app"
     ]
   },
-  "homepage": "https://sergeystepanenko.github.io/madmenfmx-new/"
+  "homepage": "https://sergeystepanenko.github.io"
 }
