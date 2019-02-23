@@ -38,6 +38,7 @@ const MissionDescription = styled(S.UnderlinedText)`
 const MissionDescContainer = styled.div`
   max-width: 600px;
   margin: 40px auto 0;
+  text-align: center;
 `
 
 const MissionInfo = styled.p`
@@ -52,15 +53,24 @@ const MissionInfo = styled.p`
 `
 
 export default function Mission(props: any) {
-  const { id } = props
+  const { id, isTablet } = props
 
   return (
     <MissionSection id={id}>
       <MissionTitle>Mission</MissionTitle>
       <MissionDescContainer>
-        <MissionDescription>
-          Enabling instant access to goods for everyone, everywhere
-        </MissionDescription>
+        {isTablet ? (
+          <MissionDescription>
+            Enabling instant access to goods for everyone, everywhere
+          </MissionDescription>
+        ) : (
+          <React.Fragment>
+            <MissionDescription>
+              Enabling instant access to goods
+            </MissionDescription>
+            <MissionDescription>for everyone, everywhere</MissionDescription>
+          </React.Fragment>
+        )}
       </MissionDescContainer>
       <MissionInfo>
         We believe the next big thing in logistics is near-instant delivery of

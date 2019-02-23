@@ -41,6 +41,8 @@ const PartnersBlock = styled.div`
   }
 `
 
+const ImageLink: any = styled.a``
+
 export default function Partners(props: any) {
   const { id } = props
 
@@ -48,9 +50,15 @@ export default function Partners(props: any) {
     <PartnersSection id={id}>
       <Title>Partners</Title>
       <PartnersBlock>
-        <Image src={partner1Image} width="232px" alt="luxaviation" />
-        <Image src={partner2Image} width="148px" alt="techstars" />
-        <Image src={partner3Image} width="204px" alt="nvidia" />
+        <ImageLink target="_blank" href="https://luxaviation.com">
+          <Image src={partner1Image} width="232px" alt="luxaviation" />
+        </ImageLink>
+        <ImageLink target="_blank" href="https://techstars.com">
+          <Image src={partner2Image} width="148px" alt="techstars" />
+        </ImageLink>
+        <ImageLink target="_blank" href="https://nvidia.com">
+          <Image src={partner3Image} width="204px" alt="nvidia" />
+        </ImageLink>
       </PartnersBlock>
     </PartnersSection>
   )

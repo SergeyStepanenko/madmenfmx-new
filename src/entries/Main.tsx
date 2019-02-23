@@ -71,6 +71,7 @@ const MoreNewsButton = styled.button`
   font-family: Avenir Black;
   cursor: pointer;
   outline: none;
+  color: black;
 `
 
 const MobileLogoContainer = styled.div`

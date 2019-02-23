@@ -19,7 +19,7 @@ const TurnKeySolutionWrapper: any = styled.section`
 `
 
 const Title: any = styled(S.UnderlinedText)`
-  font-size: ${(props: any) => (props.isTablet ? 56 : 35)}px;
+  font-size: 35px;
 
   ${({ isTablet }: any) =>
     isTablet &&
@@ -39,6 +39,7 @@ const Text = styled.p`
   font-family: Open Sans;
   max-width: 700px;
   line-height: 31px;
+  text-align: center;
 
   @media (max-width: 990px) {
     padding-right: 12px;
@@ -108,14 +109,6 @@ const ItemText: any = styled.p`
   font-size: 16px;
   font-family: Open Sans Bold;
   line-height: 24px;
-
-  ${({ isTablet, isMobile }: any): any => {
-    if (!isTablet && !isMobile) {
-      return css`
-        white-space: nowrap;
-      `
-    }
-  }}
 `
 
 const Item = ({
