@@ -33,9 +33,9 @@ const Description: any = styled.div`
   font-size: 14px;
   font-family: Open Sans;
   line-height: 24px;
-  height: ${(props: any) => props.nodeHeight};
+  max-height: ${(props: any) => props.nodeHeight};
   overflow: hidden;
-  transition: height 0.3s ease-in-out;
+  transition: max-height 0.33s ease-in;
 
   p {
     font-size: 14px;
@@ -103,7 +103,8 @@ export default class CarouselItem extends React.Component<any> {
     }
 
     if (this.descriptionHeight) {
-      return `${this.descriptionHeight}px`
+      // @ts-ignore
+      return `${this.descriptionHeight + 100}px`
     }
 
     return 'auto'
@@ -123,11 +124,9 @@ export default class CarouselItem extends React.Component<any> {
   setHeight = () => {
     const { index, onItemUpdate } = this.props
 
-    setTimeout(() => {
-      // @ts-ignore
-      this.descriptionHeight = this.descriptionRef.current.clientHeight
-      onItemUpdate(index, false)
-    }, 1000)
+    // @ts-ignore
+    this.descriptionHeight = this.descriptionRef.current.clientHeight
+    onItemUpdate(index, false)
   }
 
   descriptionRef = React.createRef()

@@ -3,11 +3,12 @@ import { debounce } from 'lodash-es'
 // @ts-ignore
 import { Swipeable } from 'react-swipeable'
 import styled from 'src/styled-components'
+import Item from './Item'
 import * as S from 'src/styles'
 import ScreenService from 'src/services/ScreenService'
+import { width, padding } from './constants'
 
 import ArrowCarousel from 'src/assets/svgr/ArrowCarousel'
-import linkedInIcon from 'src/assets/linkedin.svg'
 
 import alexImage from 'src/assets/team_alex.png'
 import dimiImage from 'src/assets/team_dimi.png'
@@ -73,14 +74,14 @@ const items = [
     infoNode: (
       <React.Fragment>
         <li>
-          <b>PSerial entrepreneur</b>, co-founded 2 hardware start-ups
+          <b>Serial entrepreneur</b>, co-founded 2 hardware start-ups
         </li>
         <li>
-          Growth strategy for <b>PGoogle</b>, <b>PIBM</b> and{' '}
-          <b>PMcKinsey Digital</b>
+          Growth strategy for <b>Google</b>, <b>IBM</b> and{' '}
+          <b>McKinsey Digital</b>
         </li>
         <li>
-          <b>PMBA</b> from Kellogg School of Management
+          <b>MBA</b> from Kellogg School of Management
         </li>
       </React.Fragment>
     )
@@ -124,7 +125,7 @@ const items = [
           <b>neural networks</b>
         </li>
         <li>
-          Built multi-jointed r<b>obotic manipulators</b> and walkers
+          Built multi-jointed <b>robotic manipulators</b> and walkers
         </li>
         <li>
           <b>PhD</b> in <b>Cybernetics</b>
@@ -133,9 +134,6 @@ const items = [
     )
   }
 ]
-
-const width = 250
-const padding = 16
 
 const TeamSection = styled.section`
   padding-top: 76px;
@@ -200,27 +198,6 @@ const Block: any = styled.div<{ shift: number }>`
   touch-action: none;
 `
 
-const ItemImage = styled.img`
-  width: 126px;
-  height: 126px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-`
-
-const ItemTitle = styled.p`
-  margin-top: 20px;
-  font-family: Open Sans Bold;
-`
-
-const ItemDescription = styled.p`
-  margin-top: 12px;
-  color: #00a3f2;
-  font-size: 12px;
-  font-family: Open Sans Bold;
-  line-height: 14px;
-`
-
 const Carousel = styled.div`
   display: flex;
   justify-content: center;
@@ -249,125 +226,6 @@ const ArrowLeftButton = styled(Button)`
 `
 
 const ArrowRightButton = styled(Button)``
-
-const TitleBlock = styled.div`
-  display: flex;
-  align-items: center;
-  padding-left: 5px;
-
-  a {
-    margin-left: 14px;
-  }
-`
-
-const ItemInner: any = styled.div`
-  position: relative;
-  width: ${width}px;
-  height: 270px;
-  background-color: #fff;
-  text-align: center;
-  flex-flow: column;
-  padding-top: 28px;
-  border-radius: 6px;
-`
-
-const HiddenBlock = styled.div`
-  position: absolute;
-  top: 22px;
-  left: 0;
-  padding: 0 10px;
-  z-index: 0;
-  opacity: 0;
-  transition: opacity 0.2s ease-in-out;
-
-  ${ItemTitle} {
-    margin-top: 0;
-  }
-
-  ul {
-    margin-top: 11px;
-    padding: 0 19px;
-    list-style: none;
-    text-align: left;
-
-    & > * + * {
-      margin-top: 7px;
-    }
-  }
-
-  li {
-    font-size: 14px;
-    line-height: 16px;
-
-    b {
-      color: #00a1e9;
-      font-weight: bold;
-      font-size: inherit;
-    }
-
-    &:before {
-      content: '\\2022';
-      color: #00a1e9;
-      font-weight: bold;
-      display: inline-block;
-      width: 1em;
-      margin-left: -1em;
-    }
-  }
-`
-
-const VisibleBlock = styled.div`
-  position: relative;
-  z-index: 1;
-  opacity: 1;
-  transition: opacity 0.2s ease-in-out;
-`
-
-const ItemWrapper: any = styled.a`
-  display: inline-block;
-  vertical-align: top;
-  text-decoration: none;
-  color: black;
-  border-radius: 6px;
-  padding: ${padding}px;
-
-  &:hover {
-    ${VisibleBlock} {
-      z-index: 0;
-      opacity: 0;
-    }
-
-    ${HiddenBlock} {
-      z-index: 1;
-      opacity: 1;
-    }
-  }
-`
-
-function Item({ image, title, description, link, index, infoNode }: any) {
-  const itemTitle = <ItemTitle>{title}</ItemTitle>
-
-  return (
-    <ItemWrapper index={index}>
-      <ItemInner>
-        <VisibleBlock>
-          <ItemImage src={image} />
-          {itemTitle}
-          <ItemDescription>{description}</ItemDescription>
-        </VisibleBlock>
-        <HiddenBlock>
-          <TitleBlock>
-            {itemTitle}
-            <a href={link} target="_black">
-              <img src={linkedInIcon} width="20px" alt="linkedin" />
-            </a>
-          </TitleBlock>
-          <ul>{infoNode}</ul>
-        </HiddenBlock>
-      </ItemInner>
-    </ItemWrapper>
-  )
-}
 
 export default class Team extends React.Component<any> {
   state = {
@@ -454,7 +312,7 @@ export default class Team extends React.Component<any> {
   }
 
   render() {
-    const { id } = this.props
+    const { id, isTablet } = this.props
     const { block } = this.state
 
     return (
@@ -491,7 +349,12 @@ export default class Team extends React.Component<any> {
             <Container containerWidth={this.containerWidth}>
               <Block shift={this.shift} blockWidth={this.blockWidth}>
                 {items.map((item: any, index) => (
-                  <Item key={item.title} index={index} {...item} />
+                  <Item
+                    key={item.title}
+                    index={index}
+                    isTablet={isTablet}
+                    {...item}
+                  />
                 ))}
               </Block>
             </Container>

@@ -173,7 +173,7 @@ export default class Main extends React.Component {
           isTablet={isTablet}
           isMobile={isMobile}
         />
-        <Team id={this.menuItems[4]} isMobile={isMobile} />
+        <Team id={this.menuItems[4]} isTablet={isTablet} />
         <Partners id={this.menuItems[5]} isMobile={isMobile} />
       </Wrapper>
     )
