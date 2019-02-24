@@ -7,6 +7,7 @@ import * as S from 'src/styles'
 import ScreenService from 'src/services/ScreenService'
 
 import ArrowCarousel from 'src/assets/svgr/ArrowCarousel'
+import linkedInIcon from 'src/assets/linkedin.svg'
 
 import alexImage from 'src/assets/team_alex.png'
 import dimiImage from 'src/assets/team_dimi.png'
@@ -19,31 +20,117 @@ const items = [
     image: frankImage,
     title: 'Dr. Frank Noppel',
     description: 'Co-Founder, CEO',
-    link: 'http://linkedin.com/in/franknoppel'
+    link: 'http://linkedin.com/in/franknoppel',
+    infoNode: (
+      <React.Fragment>
+        <li>
+          <b>Founder</b> of private jet air taxi company
+        </li>
+        <li>
+          2 PhDs in <b>aircraft propulsion</b>
+        </li>
+        <li>
+          <b>Inventor</b> of 3 patents
+        </li>
+        <li>
+          <b>Researcher</b> for green aircraft propulsion technology,{' '}
+          <b>Rolls Royce</b>
+        </li>
+        <li>
+          Developed <b>control system</b> of spacecraft prototype, EADS Astrium{' '}
+          <b>(Airbus)</b>
+        </li>
+      </React.Fragment>
+    )
   },
   {
     image: gerritImage,
     title: 'Dr. Gerrit Becker',
     description: 'Co-Founder, Head of Technical Development',
-    link: 'http://linkedin.com/in/dr-gerrit-becker-33619757'
+    link: 'http://linkedin.com/in/dr-gerrit-becker-33619757',
+    infoNode: (
+      <React.Fragment>
+        <li>
+          Designed <b>autonomous road vehicle</b> for USA Pentagon
+        </li>
+        <li>
+          Worked on <b>NASA</b> project
+        </li>
+        <li>
+          Expert on <b>light-weight structures</b>
+        </li>
+        <li>
+          <b>PhD</b> in Mechanical Engineering
+        </li>
+      </React.Fragment>
+    )
   },
   {
     image: alexImage,
     title: 'Alexander Xydas',
     description: 'Co-Founder, Head of Business Development',
-    link: 'http://linkedin.com/in/alexanderxydas'
+    link: 'http://linkedin.com/in/alexanderxydas',
+    infoNode: (
+      <React.Fragment>
+        <li>
+          <b>PSerial entrepreneur</b>, co-founded 2 hardware start-ups
+        </li>
+        <li>
+          Growth strategy for <b>PGoogle</b>, <b>PIBM</b> and{' '}
+          <b>PMcKinsey Digital</b>
+        </li>
+        <li>
+          <b>PMBA</b> from Kellogg School of Management
+        </li>
+      </React.Fragment>
+    )
   },
   {
     image: jamesImage,
     title: 'James McClearen',
     description: 'Head of R&D',
-    link: 'http://linkedin.com/in/jamesmcclearen'
+    link: 'http://linkedin.com/in/jamesmcclearen',
+    infoNode: (
+      <React.Fragment>
+        <li>
+          Mass production at <b>Toyota</b> in Japan
+        </li>
+        <li>
+          Cutting edge <b>military vehicle designs</b>
+        </li>
+        <li>
+          <b>15-year track record</b> of leading and inspiring teams
+        </li>
+        <li>
+          <b>Inventor</b> of the first proven blast propagation mapping sensor
+          tech
+        </li>
+      </React.Fragment>
+    )
   },
   {
     image: dimiImage,
     title: 'Dr. Dimitris Xydas',
     description: 'Software & Control Systems',
-    link: 'http://linkedin.com/in/dimitrisxydas/'
+    link: 'http://linkedin.com/in/dimitrisxydas/',
+    infoNode: (
+      <React.Fragment>
+        <li>
+          <b>Lead engineer</b> for <b>robotic remote-handling systems</b> for
+          operation within nuclear environment
+        </li>
+        <li>
+          Developed sign-language recognition gloves using{' '}
+          <b>neural networks</b>
+        </li>
+        <li>
+          Built multi-jointed r<b>obotic manipulators</b> and walkers
+        </li>
+        <li>
+          <b>PhD</b> in <b>Cybernetics</b>
+        </li>
+      </React.Fragment>
+    )
   }
 ]
 
@@ -97,26 +184,6 @@ const Info = styled.div`
   @media (max-width: 970px) {
     max-width: 640px;
   }
-`
-
-const ItemInner: any = styled.div`
-  width: ${width}px;
-  height: 270px;
-  background-color: #fff;
-  text-align: center;
-  flex-flow: column;
-  padding-top: 28px;
-  border-radius: 6px;
-`
-
-const ItemWrapper: any = styled.a`
-  display: inline-block;
-  vertical-align: top;
-  cursor: pointer;
-  text-decoration: none;
-  color: black;
-  border-radius: 6px;
-  padding: ${padding}px;
 `
 
 const Container: any = styled.div`
@@ -183,13 +250,120 @@ const ArrowLeftButton = styled(Button)`
 
 const ArrowRightButton = styled(Button)``
 
-function Item({ image, title, description, link, index }: any) {
+const TitleBlock = styled.div`
+  display: flex;
+  align-items: center;
+  padding-left: 5px;
+
+  a {
+    margin-left: 14px;
+  }
+`
+
+const ItemInner: any = styled.div`
+  position: relative;
+  width: ${width}px;
+  height: 270px;
+  background-color: #fff;
+  text-align: center;
+  flex-flow: column;
+  padding-top: 28px;
+  border-radius: 6px;
+`
+
+const HiddenBlock = styled.div`
+  position: absolute;
+  top: 22px;
+  left: 0;
+  padding: 0 10px;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+
+  ${ItemTitle} {
+    margin-top: 0;
+  }
+
+  ul {
+    margin-top: 11px;
+    padding: 0 19px;
+    list-style: none;
+    text-align: left;
+
+    & > * + * {
+      margin-top: 7px;
+    }
+  }
+
+  li {
+    font-size: 14px;
+    line-height: 16px;
+
+    b {
+      color: #00a1e9;
+      font-weight: bold;
+      font-size: inherit;
+    }
+
+    &:before {
+      content: '\\2022';
+      color: #00a1e9;
+      font-weight: bold;
+      display: inline-block;
+      width: 1em;
+      margin-left: -1em;
+    }
+  }
+`
+
+const VisibleBlock = styled.div`
+  position: relative;
+  z-index: 1;
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out;
+`
+
+const ItemWrapper: any = styled.a`
+  display: inline-block;
+  vertical-align: top;
+  text-decoration: none;
+  color: black;
+  border-radius: 6px;
+  padding: ${padding}px;
+
+  &:hover {
+    ${VisibleBlock} {
+      z-index: 0;
+      opacity: 0;
+    }
+
+    ${HiddenBlock} {
+      z-index: 1;
+      opacity: 1;
+    }
+  }
+`
+
+function Item({ image, title, description, link, index, infoNode }: any) {
+  const itemTitle = <ItemTitle>{title}</ItemTitle>
+
   return (
-    <ItemWrapper href={link} target="_black" index={index}>
+    <ItemWrapper index={index}>
       <ItemInner>
-        <ItemImage src={image} />
-        <ItemTitle>{title}</ItemTitle>
-        <ItemDescription>{description}</ItemDescription>
+        <VisibleBlock>
+          <ItemImage src={image} />
+          {itemTitle}
+          <ItemDescription>{description}</ItemDescription>
+        </VisibleBlock>
+        <HiddenBlock>
+          <TitleBlock>
+            {itemTitle}
+            <a href={link} target="_black">
+              <img src={linkedInIcon} width="20px" alt="linkedin" />
+            </a>
+          </TitleBlock>
+          <ul>{infoNode}</ul>
+        </HiddenBlock>
       </ItemInner>
     </ItemWrapper>
   )
@@ -316,18 +490,9 @@ export default class Team extends React.Component<any> {
           >
             <Container containerWidth={this.containerWidth}>
               <Block shift={this.shift} blockWidth={this.blockWidth}>
-                {items.map(
-                  ({ image, title, description, link }: any, index) => (
-                    <Item
-                      key={title}
-                      index={index}
-                      image={image}
-                      title={title}
-                      description={description}
-                      link={link}
-                    />
-                  )
-                )}
+                {items.map((item: any, index) => (
+                  <Item key={item.title} index={index} {...item} />
+                ))}
               </Block>
             </Container>
           </Swipeable>
