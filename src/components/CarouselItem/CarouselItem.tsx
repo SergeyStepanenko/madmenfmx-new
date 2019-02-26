@@ -102,10 +102,10 @@ export default class CarouselItem extends React.Component<any> {
       return '90px'
     }
 
-    if (this.descriptionHeight) {
-      // @ts-ignore
-      return `${this.descriptionHeight + 100}px`
-    }
+    // if (this.descriptionHeight) {
+    //   // @ts-ignore
+    //   return `${this.descriptionHeight + 100}px`
+    // }
 
     return 'auto'
   }

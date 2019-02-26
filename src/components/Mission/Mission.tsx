@@ -45,6 +45,7 @@ const MissionInfo = styled.p`
   max-width: 654px;
   color: #fff;
   font-family: Open Sans;
+  font-size: 19px;
   text-align: center;
   margin-top: 54px;
   margin-right: auto;
@@ -68,7 +69,7 @@ export default function Mission(props: any) {
             <MissionDescription>
               Enabling instant access to goods
             </MissionDescription>
-            <MissionDescription>for everyone, everywhere</MissionDescription>
+            <MissionDescription> for everyone, everywhere</MissionDescription>
           </React.Fragment>
         )}
       </MissionDescContainer>

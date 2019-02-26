@@ -88,6 +88,7 @@ const HeliTitle: any = styled(S.UnderlinedText)`
 `
 
 const HeliDescripion = styled.div`
+  font-size: 19px;
   margin-top: 40px;
   font-family: Open Sans;
   line-height: 31px;

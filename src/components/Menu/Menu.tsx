@@ -10,7 +10,7 @@ import burgerImage from 'src/assets/menu.svg'
 import Logo from 'src/assets/svgr/Logo'
 import ScreenService from 'src/services/ScreenService'
 
-const menuHeight = 76
+export const menuHeight = 76
 
 const MenuSection: any = styled.section`
   position: relative;

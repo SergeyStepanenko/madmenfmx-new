@@ -171,7 +171,7 @@ const DesWrapper = styled.div`
 const Info = styled.div`
   margin-top: 45px;
   font-family: Open Sans;
-  font-size: 16px;
+  font-size: 19px;
   line-height: 24px;
   max-width: 860px;
   margin-left: auto;

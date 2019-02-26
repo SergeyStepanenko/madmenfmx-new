@@ -1,10 +1,12 @@
 import * as React from 'react'
 import { debounce } from 'lodash-es'
 import styled from 'src/styled-components'
+// @ts-ignore
+import scrollToElement from 'scroll-to-element'
 
 import ScreenService from 'src/services/ScreenService'
 import Logo from 'src/assets/svgr/Logo'
-import Menu from 'src/components/Menu'
+import Menu, { menuHeight } from 'src/components/Menu'
 import Blog from 'src/components/Blog'
 import Carousel from 'src/components/Carousel'
 import Info from 'src/components/Info'
@@ -20,6 +22,7 @@ import logoMobile from 'src/assets/logo_icon.svg'
 const Wrapper: any = styled.div``
 
 const ImageSection = styled.section`
+  position: relative;
   width: 100%;
   height: 630px;
   display: flex;
@@ -29,6 +32,32 @@ const ImageSection = styled.section`
   background-size: cover;
   background-repeat: no-repeat;
   background-position-x: center;
+`
+
+const ArrowDown = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+`
+
+const ArrowText = styled.p`
+  color: #00a4f3;
+  font-family: Open Sans Bold;
+  font-size: 14px;
+  bottom: 60px;
+  text-align: center;
+`
+
+const Arrow = styled.div`
+  margin-top: 20px;
+  position: relative;
+  width: 2px;
+  height: 39px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #00a4f3;
 `
 
 const TitleContainer = styled.h1`
@@ -150,6 +179,10 @@ export default class Main extends React.Component {
             ) : (
               <Logo width="815px" />
             )}
+            <ArrowDown onClick={this.handleArrowClick}>
+              <ArrowText>Scroll Down</ArrowText>
+              <Arrow />
+            </ArrowDown>
           </TitleContainer>
         </ImageSection>
         {this.renderMenu({ isStatic: false })}
@@ -189,6 +222,12 @@ export default class Main extends React.Component {
   handleCloseClick = () => {
     this.setState({ isBlog: false }, () => {
       window.scroll(0, 0)
+    })
+  }
+
+  handleArrowClick = () => {
+    scrollToElement(`#${this.menuItems[1]}`, {
+      offset: -menuHeight
     })
   }
 }

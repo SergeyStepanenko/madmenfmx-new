@@ -36,6 +36,7 @@ const Text = styled.p`
   margin-top: 45px;
   margin-left: auto;
   margin-right: auto;
+  font-size: 19px;
   font-family: Open Sans;
   max-width: 700px;
   line-height: 31px;
@@ -151,9 +152,8 @@ export default function TurnKeySolution(props: any) {
       <Text>
         For our customers we offer an end-to-end solution, from operating and
         monitoring the fleet of UAVs to the on-the-ground operations and
-        delivering to the final destination. <br />
-        B2B customers simply book on our platform and sit back until the goods
-        are delivered.
+        delivering to the final destination. B2B customers simply book on our
+        platform and sit back until the goods are delivered.
       </Text>
       <List>
         <Item
