@@ -122,7 +122,7 @@ const Item = ({
   isMobile
 }: any) => (
   <ItemInner isTablet={isTablet}>
-    <Image src={image} />
+    <Image src={image} width="250px" />
     <ItemTitle>{titleText}</ItemTitle>
     <Container>
       <FirstBlock>

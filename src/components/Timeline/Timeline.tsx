@@ -34,7 +34,7 @@ const Block: any = styled.div`
   margin-top: 60px;
   background-repeat: no-repeat;
   background-position-y: 70px;
-  background-size: 855px;
+  background-size: 855px 30px;
   background-image: url(${timelineImage});
 
   @media (min-width: 991px) {

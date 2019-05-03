@@ -129,5 +129,12 @@
       "react-app"
     ]
   },
+  "browserslist": [
+    "> 1%",
+    "ie 11",
+    "android >= 4.4",
+    "safari >= 8",
+    "ios >= 8"
+  ],
   "homepage": "https://sergeystepanenko.github.io"
 }
